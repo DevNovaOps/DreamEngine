@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Profile Builder</title>
+    <meta name="description" content="Build your professional profile with our AI-powered career navigator">
+    <link rel="stylesheet" href="{% static 'profile-builder-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="learner-dashboard.html" class="logo-link">
+                        <h1 class="logo" id="navBrand">CareerNav</h1>
+                    </a>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="header-actions">
+                    <button class="back-btn" id="backBtn" aria-label="Go back">
+                        <span class="back-icon">←</span>
+                        <span class="back-text" id="backText">Back</span>
+                    </button>
+                    <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+                        <span class="logout-icon">🚪</span>
+                        <span class="logout-text" id="logoutText">Logout</span>
+                    </button>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="en" data-text='{"pageTitle": "Career Navigator - Profile Builder", "pageDescription": "Build your professional profile with our AI-powered career navigator", "navBrand": "CareerNav", "selectLanguage": "Select language", "profileBuilder": "Profile Builder", "buildProfile": "Build Your Profile", "step1": "Personal Information", "step2": "Education & Skills", "step3": "Experience", "step4": "Preferences", "step5": "Review & Save", "firstName": "First Name", "lastName": "Last Name", "email": "Email Address", "phone": "Phone Number", "location": "Location", "education": "Education Level", "skills": "Skills", "experience": "Work Experience", "preferences": "Career Preferences", "next": "Next", "previous": "Previous", "save": "Save Profile", "autoSave": "Auto-saving...", "saved": "Profile Saved!", "firstNameRequired": "First name is required", "lastNameRequired": "Last name is required", "emailRequired": "Email is required", "phoneRequired": "Phone number is required", "locationRequired": "Location is required", "educationRequired": "Education level is required", "skillsRequired": "Please add at least one skill", "experienceRequired": "Work experience is required", "preferencesRequired": "Career preferences are required", "invalidEmail": "Please enter a valid email address", "invalidPhone": "Please enter a valid phone number", "addSkill": "Add Skill", "removeSkill": "Remove", "skillPlaceholder": "Enter a skill", "experiencePlaceholder": "Describe your work experience", "preferencesPlaceholder": "Describe your career preferences", "profileComplete": "Profile Complete!", "profileSaved": "Your profile has been saved successfully!", "continueLearning": "Continue Learning"}'>English</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="hi" data-text='{"pageTitle": "करियर नेविगेटर - प्रोफाइल बिल्डर", "pageDescription": "हमारे AI-संचालित करियर नेविगेटर के साथ अपना पेशेवर प्रोफाइल बनाएं", "navBrand": "करियरनव", "selectLanguage": "भाषा चुनें", "profileBuilder": "प्रोफाइल बिल्डर", "buildProfile": "अपना प्रोफाइल बनाएं", "step1": "व्यक्तिगत जानकारी", "step2": "शिक्षा और कौशल", "step3": "अनुभव", "step4": "प्राथमिकताएं", "step5": "समीक्षा और सहेजें", "firstName": "पहला नाम", "lastName": "अंतिम नाम", "email": "ईमेल पता", "phone": "फोन नंबर", "location": "स्थान", "education": "शिक्षा स्तर", "skills": "कौशल", "experience": "काम का अनुभव", "preferences": "करियर प्राथमिकताएं", "next": "अगला", "previous": "पिछला", "save": "प्रोफाइल सहेजें", "autoSave": "स्वचालित सहेजा जा रहा है...", "saved": "प्रोफाइल सहेजा गया!", "firstNameRequired": "पहला नाम आवश्यक है", "lastNameRequired": "अंतिम नाम आवश्यक है", "emailRequired": "ईमेल आवश्यक है", "phoneRequired": "फोन नंबर आवश्यक है", "locationRequired": "स्थान आवश्यक है", "educationRequired": "शिक्षा स्तर आवश्यक है", "skillsRequired": "कृपया कम से कम एक कौशल जोड़ें", "experienceRequired": "काम का अनुभव आवश्यक है", "preferencesRequired": "करियर प्राथमिकताएं आवश्यक हैं", "invalidEmail": "कृपया एक वैध ईमेल पता दर्ज करें", "invalidPhone": "कृपया एक वैध फोन नंबर दर्ज करें", "addSkill": "कौशल जोड़ें", "removeSkill": "हटाएं", "skillPlaceholder": "एक कौशल दर्ज करें", "experiencePlaceholder": "अपने काम के अनुभव का वर्णन करें", "preferencesPlaceholder": "अपनी करियर प्राथमिकताओं का वर्णन करें", "profileComplete": "प्रोफाइल पूर्ण!", "profileSaved": "आपका प्रोफाइल सफलतापूर्वक सहेजा गया है!", "continueLearning": "सीखना जारी रखें"}'>हिन्दी</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="ta" data-text='{"pageTitle": "தொழில் வழிகாட்டி - சுயவிவர கட்டுநர்", "pageDescription": "எங்கள் AI-இயக்கப்பட்ட தொழில் வழிகாட்டியுடன் உங்கள் தொழில்முறை சுயவிவரத்தை உருவாக்குங்கள்", "navBrand": "தொழில்வழி", "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்", "profileBuilder": "சுயவிவர கட்டுநர்", "buildProfile": "உங்கள் சுயவிவரத்தை உருவாக்குங்கள்", "step1": "தனிப்பட்ட தகவல்", "step2": "கல்வி மற்றும் திறன்கள்", "step3": "அனுபவம்", "step4": "விருப்பங்கள்", "step5": "மறுஆய்வு மற்றும் சேமிப்பு", "firstName": "முதல் பெயர்", "lastName": "கடைசி பெயர்", "email": "மின்னஞ்சல் முகவரி", "phone": "தொலைபேசி எண்", "location": "இடம்", "education": "கல்வி நிலை", "skills": "திறன்கள்", "experience": "வேலை அனுபவம்", "preferences": "தொழில் விருப்பங்கள்", "next": "அடுத்து", "previous": "முந்தைய", "save": "சுயவிவரத்தை சேமிக்கவும்", "autoSave": "தானாக சேமிக்கப்படுகிறது...", "saved": "சுயவிவரம் சேமிக்கப்பட்டது!", "firstNameRequired": "முதல் பெயர் தேவை", "lastNameRequired": "கடைசி பெயர் தேவை", "emailRequired": "மின்னஞ்சல் தேவை", "phoneRequired": "தொலைபேசி எண் தேவை", "locationRequired": "இடம் தேவை", "educationRequired": "கல்வி நிலை தேவை", "skillsRequired": "தயவுசெய்து குறைந்தது ஒரு திறனைச் சேர்க்கவும்", "experienceRequired": "வேலை அனுபவம் தேவை", "preferencesRequired": "தொழில் விருப்பங்கள் தேவை", "invalidEmail": "தயவுசெய்து சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்", "invalidPhone": "தயவுசெய்து சரியான தொலைபேசி எண்ணை உள்ளிடவும்", "addSkill": "திறனைச் சேர்க்கவும்", "removeSkill": "அகற்று", "skillPlaceholder": "ஒரு திறனை உள்ளிடவும்", "experiencePlaceholder": "உங்கள் வேலை அனுபவத்தை விவரிக்கவும்", "preferencesPlaceholder": "உங்கள் தொழில் விருப்பங்களை விவரிக்கவும்", "profileComplete": "சுயவிவரம் முழுமையானது!", "profileSaved": "உங்கள் சுயவிவரம் வெற்றிகரமாக சேமிக்கப்பட்டது!", "continueLearning": "கற்றலைத் தொடரவும்"}'>தமிழ்</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="bn" data-text='{"pageTitle": "ক্যারিয়ার নেভিগেটর - প্রোফাইল বিল্ডার", "pageDescription": "আমাদের AI-চালিত ক্যারিয়ার নেভিগেটরের সাথে আপনার পেশাদার প্রোফাইল তৈরি করুন", "navBrand": "ক্যারিয়ারনেভ", "selectLanguage": "ভাষা নির্বাচন করুন", "profileBuilder": "প্রোফাইল বিল্ডার", "buildProfile": "আপনার প্রোফাইল তৈরি করুন", "step1": "ব্যক্তিগত তথ্য", "step2": "শিক্ষা এবং দক্ষতা", "step3": "অভিজ্ঞতা", "step4": "পছন্দ", "step5": "পর্যালোচনা এবং সংরক্ষণ", "firstName": "নামের প্রথম অংশ", "lastName": "নামের শেষ অংশ", "email": "ইমেইল ঠিকানা", "phone": "ফোন নম্বর", "location": "অবস্থান", "education": "শিক্ষার স্তর", "skills": "দক্ষতা", "experience": "কাজের অভিজ্ঞতা", "preferences": "ক্যারিয়ার পছন্দ", "next": "পরবর্তী", "previous": "পূর্ববর্তী", "save": "প্রোফাইল সংরক্ষণ", "autoSave": "স্বয়ংক্রিয়ভাবে সংরক্ষণ হচ্ছে...", "saved": "প্রোফাইল সংরক্ষিত!", "firstNameRequired": "নামের প্রথম অংশ প্রয়োজন", "lastNameRequired": "নামের শেষ অংশ প্রয়োজন", "emailRequired": "ইমেইল প্রয়োজন", "phoneRequired": "ফোন নম্বর প্রয়োজন", "locationRequired": "অবস্থান প্রয়োজন", "educationRequired": "শিক্ষার স্তর প্রয়োজন", "skillsRequired": "অনুগ্রহ করে কমপক্ষে একটি দক্ষতা যোগ করুন", "experienceRequired": "কাজের অভিজ্ঞতা প্রয়োজন", "preferencesRequired": "ক্যারিয়ার পছন্দ প্রয়োজন", "invalidEmail": "অনুগ্রহ করে একটি বৈধ ইমেইল ঠিকানা লিখুন", "invalidPhone": "অনুগ্রহ করে একটি বৈধ ফোন নম্বর লিখুন", "addSkill": "দক্ষতা যোগ করুন", "removeSkill": "অপসারণ", "skillPlaceholder": "একটি দক্ষতা লিখুন", "experiencePlaceholder": "আপনার কাজের অভিজ্ঞতা বর্ণনা করুন", "preferencesPlaceholder": "আপনার ক্যারিয়ার পছন্দ বর্ণনা করুন", "profileComplete": "প্রোফাইল সম্পূর্ণ!", "profileSaved": "আপনার প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে!", "continueLearning": "শেখা চালিয়ে যান"}'>বাংলা</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="gu" data-text='{"pageTitle": "કારિયર નેવિગેટર - પ્રોફાઇલ બિલ્ડર", "pageDescription": "અમારા AI-ચાલિત કારિયર નેવિગેટર સાથે તમારું વ્યાવસાયિક પ્રોફાઇલ બનાવો", "navBrand": "કારિયરનવ", "selectLanguage": "ભાષા પસંદ કરો", "profileBuilder": "પ્રોફાઇલ બિલ્ડર", "buildProfile": "તમારું પ્રોફાઇલ બનાવો", "step1": "વ્યક્તિગત માહિતી", "step2": "શિક્ષણ અને કૌશલ્યો", "step3": "અનુભવ", "step4": "પસંદગીઓ", "step5": "સમીક્ષા અને સેવ", "firstName": "પ્રથમ નામ", "lastName": "છેલ્લું નામ", "email": "ઇમેઇલ સરનામું", "phone": "ફોન નંબર", "location": "સ્થાન", "education": "શિક્ષણ સ્તર", "skills": "કૌશલ્યો", "experience": "કામનો અનુભવ", "preferences": "કારિયર પસંદગીઓ", "next": "આગળ", "previous": "પાછળ", "save": "પ્રોફાઇલ સેવ કરો", "autoSave": "સ્વચાલિત સેવ થઈ રહ્યું છે...", "saved": "પ્રોફાઇલ સેવ થઈ ગયું!", "firstNameRequired": "પ્રથમ નામ જરૂરી છે", "lastNameRequired": "છેલ્લું નામ જરૂરી છે", "emailRequired": "ઇમેઇલ જરૂરી છે", "phoneRequired": "ફોન નંબર જરૂરી છે", "locationRequired": "સ્થાન જરૂરી છે", "educationRequired": "શિક્ષણ સ્તર જરૂરી છે", "skillsRequired": "કૃપા કરીને ઓછામાં ઓછું એક કૌશલ્ય ઉમેરો", "experienceRequired": "કામનો અનુભવ જરૂરી છે", "preferencesRequired": "કારિયર પસંદગીઓ જરૂરી છે", "invalidEmail": "કૃપા કરીને માન્ય ઇમેઇલ સરનામું દાખલ કરો", "invalidPhone": "કૃપા કરીને માન્ય ફોન નંબર દાખલ કરો", "addSkill": "કૌશલ્ય ઉમેરો", "removeSkill": "દૂર કરો", "skillPlaceholder": "એક કૌશલ્ય દાખલ કરો", "experiencePlaceholder": "તમારા કામના અનુભવનું વર્ણન કરો", "preferencesPlaceholder": "તમારી કારિયર પસંદગીઓનું વર્ણન કરો", "profileComplete": "પ્રોફાઇલ પૂર્ણ!", "profileSaved": "તમારું પ્રોફાઇલ સફળતાપૂર્વક સેવ થઈ ગયું છે!", "continueLearning": "શીખવાનું ચાલુ રાખો"}'>ગુજરાતી</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Profile Builder Content -->
+        <div class="profile-builder-container">
+            <!-- Header -->
+            <div class="builder-header">
+                <h2 class="builder-title" id="profileBuilderTitle">Profile Builder</h2>
+                <p class="builder-subtitle" id="buildProfileSubtitle">Build Your Profile</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                    <div class="progress-glow" id="progressGlow"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressText">Step 1 of 5</span>
+                </div>
+            </div>
+
+            <!-- Auto-save Indicator -->
+            <div class="auto-save-indicator" id="autoSaveIndicator">
+                <div class="save-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <span class="save-text" id="saveText">Auto-saving...</span>
+            </div>
+
+            <!-- Form Wizard -->
+            <div class="form-wizard">
+                <div class="step-container">
+                    <!-- Step 1: Personal Information -->
+                    <div class="step active" id="step1">
+                        <div class="step-card">
+                            <h3 class="step-title" id="step1Title">Personal Information</h3>
+                            <form class="step-form">
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <label for="firstName" class="input-label" id="firstNameLabel">First Name</label>
+                                        <input type="text" id="firstName" class="form-input" required>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="lastName" class="input-label" id="lastNameLabel">Last Name</label>
+                                        <input type="text" id="lastName" class="form-input" required>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <label for="email" class="input-label" id="emailLabel">Email Address</label>
+                                        <input type="email" id="email" class="form-input" required>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="phone" class="input-label" id="phoneLabel">Phone Number</label>
+                                        <input type="tel" id="phone" class="form-input" required>
+                                        <div class="input-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="location" class="input-label" id="locationLabel">Location</label>
+                                    <input type="text" id="location" class="form-input" required>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Education & Skills -->
+                    <div class="step" id="step2">
+                        <div class="step-card">
+                            <h3 class="step-title" id="step2Title">Education & Skills</h3>
+                            <form class="step-form">
+                                <div class="input-group">
+                                    <label for="education" class="input-label" id="educationLabel">Education Level</label>
+                                    <select id="education" class="form-select" required>
+                                        <option value="">Select Education Level</option>
+                                        <option value="high-school">High School</option>
+                                        <option value="diploma">Diploma</option>
+                                        <option value="bachelor">Bachelor's Degree</option>
+                                        <option value="master">Master's Degree</option>
+                                        <option value="phd">PhD</option>
+                                    </select>
+                                    <div class="input-glow"></div>
+                                </div>
+                                <div class="skills-section">
+                                    <label class="input-label" id="skillsLabel">Skills</label>
+                                    <div class="skills-container" id="skillsContainer">
+                                        <div class="skill-input-group">
+                                            <input type="text" id="skillInput" class="form-input" placeholder="Enter a skill">
+                                            <button type="button" class="add-skill-btn ripple" id="addSkillBtn">
+                                                <span id="addSkillText">Add Skill</span>
+                                            </button>
+                                        </div>
+                                        <div class="skills-list" id="skillsList"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Experience -->
+                    <div class="step" id="step3">
+                        <div class="step-card">
+                            <h3 class="step-title" id="step3Title">Experience</h3>
+                            <form class="step-form">
+                                <div class="input-group">
+                                    <label for="experience" class="input-label" id="experienceLabel">Work Experience</label>
+                                    <textarea id="experience" class="form-textarea" rows="5" placeholder="Describe your work experience" required></textarea>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Preferences -->
+                    <div class="step" id="step4">
+                        <div class="step-card">
+                            <h3 class="step-title" id="step4Title">Preferences</h3>
+                            <form class="step-form">
+                                <div class="input-group">
+                                    <label for="preferences" class="input-label" id="preferencesLabel">Career Preferences</label>
+                                    <textarea id="preferences" class="form-textarea" rows="5" placeholder="Describe your career preferences" required></textarea>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Review & Save -->
+                    <div class="step" id="step5">
+                        <div class="step-card">
+                            <h3 class="step-title" id="step5Title">Review & Save</h3>
+                            <div class="review-content" id="reviewContent">
+                                <!-- Review content will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="step-navigation">
+                    <button class="nav-btn previous-btn ripple" id="previousBtn" disabled>
+                        <span id="previousText">Previous</span>
+                    </button>
+                    <button class="nav-btn next-btn ripple" id="nextBtn">
+                        <span id="nextText">Next</span>
+                    </button>
+                    <button class="nav-btn save-btn ripple" id="saveBtn" style="display: none;">
+                        <span id="saveText">Save Profile</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">✓</div>
+            <h3 class="success-title" id="successTitle">Profile Complete!</h3>
+            <p class="success-message" id="successMessage">Your profile has been saved successfully!</p>
+            <button class="continue-btn ripple" id="continueBtn">
+                <span id="continueText">Continue Learning</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="{% static 'profile-builder-script.js' %}"></script>
+</body>
+</html>

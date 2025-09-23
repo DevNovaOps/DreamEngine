@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Your AI Career Assistant</title>
+    <meta name="description" content="AI-powered career navigation and personalized skilling assistant">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="waves"></div>
+    </div>
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav" role="navigation" aria-label="Main navigation">
+                <div class="nav-brand">
+                    <h1 class="logo" id="navBrand">DreamEngine</h1>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" id="selectLanguageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="en" data-text='{"headline": "Your AI Career Navigator", "subtitle": "Navigate your career path with AI-powered insights and personalized skilling recommendations", "login": "Login", "signup": "Sign Up", "getStarted": "Get Started", "learnMore": "Learn More", "feature1": "Personalized Career Paths", "feature2": "AI-Powered Insights", "feature3": "Skill Recommendations", "footer": "© 2025 DreamEngine. All rights reserved.", "pageTitle": "Dream - Your AI Career Assistant", "pageDescription": "AI-powered career navigation and personalized skilling assistant", "navBrand": "DreamEngine", "selectLanguage": "Select language", "loginAria": "Login to your account", "signupAria": "Create a new account"}'>English</button>
+                        </li>
+                         <li role="menuitem">
+    <button class="lang-option" data-lang="hi" data-text='{"headline": "आपका AI करियर नेविगेटर", "subtitle": "AI-संचालित अंतर्दृष्टि और व्यक्तिगत कौशल सिफारिशों के साथ अपने करियर पथ को नेविगेट करें", "login": "लॉगिन", "signup": "साइन अप", "getStarted": "शुरू करें", "learnMore": "और जानें", "feature1": "व्यक्तिगत करियर पथ", "feature2": "AI-संचालित अंतर्दृष्टि", "feature3": "कौशल सिफारिशें", "footer": "© 2024 ड्रीमइंजन। सभी अधिकार सुरक्षित।", "pageTitle": "ड्रीमइंजन - आपका AI करियर सहायक", "pageDescription": "AI-संचालित करियर नेविगेशन और व्यक्तिगत कौशल सहायक", "navBrand": "ड्रीमइंजन", "selectLanguage": "भाषा चुनें", "loginAria": "अपने खाते में लॉगिन करें", "signupAria": "नया खाता बनाएं"}'>हिन्दी</button>
+</li>
+<li role="menuitem">
+    <button class="lang-option" data-lang="ta" data-text='{"headline": "உங்கள் AI தொழில் வழிகாட்டி", "subtitle": "AI-இயக்கப்பட்ட நுண்ணறிவு மற்றும் தனிப்பட்ட திறன் பரிந்துரைகளுடன் உங்கள் தொழில் பாதையை வழிநடத்துங்கள்", "login": "உள்நுழைவு", "signup": "பதிவு செய்க", "getStarted": "தொடங்குங்கள்", "learnMore": "மேலும் அறிக", "feature1": "தனிப்பட்ட தொழில் பாதைகள்", "feature2": "AI-இயக்கப்பட்ட நுண்ணறிவு", "feature3": "திறன் பரிந்துரைகள்", "footer": "© 2024 ட்ரீம்என்ஜின். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.", "pageTitle": "ட்ரீம்என்ஜின் - உங்கள் AI தொழில் உதவியாளர்", "pageDescription": "AI-இயக்கப்பட்ட தொழில் வழிகாட்டுதல் மற்றும் தனிப்பட்ட திறன் உதவியாளர்", "navBrand": "ட்ரீம்என்ஜின்", "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்", "loginAria": "உங்கள் கணக்கில் உள்நுழையவும்", "signupAria": "புதிய கணக்கை உருவாக்கவும்"}'>தமிழ்</button>
+</li>
+<li role="menuitem">
+    <button class="lang-option" data-lang="bn" data-text='{"headline": "আপনার AI ক্যারিয়ার নেভিগেটর", "subtitle": "AI-চালিত অন্তর্দৃষ্টি এবং ব্যক্তিগত দক্ষতার সুপারিশের সাথে আপনার ক্যারিয়ার পথ নেভিগেট করুন", "login": "লগইন", "signup": "সাইন আপ", "getStarted": "শুরু করুন", "learnMore": "আরও জানুন", "feature1": "ব্যক্তিগত ক্যারিয়ার পথ", "feature2": "AI-চালিত অন্তর্দৃষ্টি", "feature3": "দক্ষতার সুপারিশ", "footer": "© 2024 ড্রিমইঞ্জিন। সমস্ত অধিকার সংরক্ষিত।", "pageTitle": "ড্রিমইঞ্জিন - আপনার AI ক্যারিয়ার সহায়ক", "pageDescription": "AI-চালিত ক্যারিয়ার নেভিগেশন এবং ব্যক্তিগত দক্ষতা সহায়ক", "navBrand": "ড্রিমইঞ্জিন", "selectLanguage": "ভাষা নির্বাচন করুন", "loginAria": "আপনার অ্যাকাউন্টে লগইন করুন", "signupAria": "নতুন অ্যাকাউন্ট তৈরি করুন"}'>বাংলা</button>
+</li>
+<li role="menuitem">
+    <button class="lang-option" data-lang="gu" data-text='{"headline": "તમારો AI કારિયર નેવિગેટર", "subtitle": "AI-ચાલિત અંતર્દૃષ્ટિ અને વ્યક્તિગત કૌશલ્ય ભલામણો સાથે તમારા કારિયર પથને નેવિગેટ કરો", "login": "લોગિન", "signup": "સાઇન અપ", "getStarted": "શરૂ કરો", "learnMore": "વધુ જાણો", "feature1": "વ્યક્તિગત કારિયર પથ", "feature2": "AI-ચાલિત અંતર્દૃષ્ટિ", "feature3": "કૌશલ્ય ભલામણો", "footer": "© 2024 ડ્રીમએન્જિન. બધા અધિકારો સુરક્ષિત.", "pageTitle": "ડ્રીમએન્જિન - તમારો AI કારિયર સહાયક", "pageDescription": "AI-ચાલિત કારિયર નેવિગેશન અને વ્યક્તિગત કૌશલ્ય સહાયક", "navBrand": "ડ્રીમએન્જિન", "selectLanguage": "ભાષા પસંદ કરો", "loginAria": "તમારા એકાઉન્ટમાં લોગિન કરો", "signupAria": "નવું એકાઉન્ટ બનાવો"}'>ગુજરાતી</button>
+</li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section class="hero" role="banner">
+            <div class="hero-content">
+                <h2 class="hero-headline" id="headline">
+                    <span class="typewriter-text">Your AI Career Navigator</span>
+                    <span class="cursor">|</span>
+                </h2>
+                
+                <p class="hero-subtitle" id="subtitle">
+                    Navigate your career path with AI-powered insights and personalized skilling recommendations
+                </p>
+
+                <div class="cta-buttons">
+                    <button class="btn btn-primary ripple" id="loginBtn" aria-label="Login to your account" onClick="location.href='{% url 'auth' %}'">
+                        <span class="btn-text">Login</span>
+                        <div class="btn-glow"></div>
+                    </button>
+
+                    <button class="btn btn-secondary ripple" id="signupBtn" aria-label="Create a new account" onClick="location.href='{% url 'auth' %}'">
+                        <span class="btn-text">Sign Up</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <span class="feature-text" id="feature1">Personalized Career Paths</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <span class="feature-text" id="feature2">AI-Powered Insights</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <span class="feature-text" id="feature3">Skill Recommendations</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <p id="footer">&copy; 2025 Dream Engine. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

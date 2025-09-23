@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Career Explorer</title>
+    <meta name="description" content="Explore NSQF courses and job roles with our interactive career explorer">
+    <link rel="stylesheet" href="{% static 'career-explorer-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="learner-dashboard.html" class="logo-link">
+                        <h1 class="logo" id="navBrand">CareerNav</h1>
+                    </a>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="header-actions">
+                    <button class="back-btn" id="backBtn" aria-label="Go back">
+                        <span class="back-icon">←</span>
+                        <span class="back-text" id="backText">Back</span>
+                    </button>
+                    <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+                        <span class="logout-icon">🚪</span>
+                        <span class="logout-text" id="logoutText">Logout</span>
+                    </button>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="en" data-text='{"pageTitle": "Career Navigator - Career Explorer", "pageDescription": "Explore NSQF courses and job roles with our interactive career explorer", "navBrand": "CareerNav", "selectLanguage": "Select language", "careerExplorer": "Career Explorer", "exploreCareers": "Explore Careers", "searchPlaceholder": "Search courses and jobs...", "filterBy": "Filter by", "all": "All", "courses": "Courses", "jobs": "Job Roles", "level": "Level", "sector": "Sector", "duration": "Duration", "salary": "Salary Range", "requirements": "Requirements", "skills": "Skills", "certification": "Certification", "applyNow": "Apply Now", "learnMore": "Learn More", "viewDetails": "View Details", "noResults": "No results found", "tryDifferentSearch": "Try a different search term", "loading": "Loading...", "course1": "Software Development", "course2": "Data Analytics", "course3": "Digital Marketing", "course4": "Cybersecurity", "course5": "Cloud Computing", "course6": "AI & Machine Learning", "job1": "Software Engineer", "job2": "Data Scientist", "job3": "Digital Marketer", "job4": "Cybersecurity Analyst", "job5": "Cloud Architect", "job6": "AI Engineer", "level1": "Level 1", "level2": "Level 2", "level3": "Level 3", "level4": "Level 4", "level5": "Level 5", "level6": "Level 6", "level7": "Level 7", "level8": "Level 8", "level9": "Level 9", "level10": "Level 10", "sector1": "Information Technology", "sector2": "Healthcare", "sector3": "Finance", "sector4": "Manufacturing", "sector5": "Education", "sector6": "Retail", "duration1": "3 months", "duration2": "6 months", "duration3": "1 year", "duration4": "2 years", "salary1": "₹3-5 LPA", "salary2": "₹5-8 LPA", "salary3": "₹8-12 LPA", "salary4": "₹12-20 LPA", "salary5": "₹20+ LPA", "requirements1": "Basic computer knowledge", "requirements2": "High school diploma", "requirements3": "Bachelor degree", "requirements4": "Master degree", "requirements5": "Professional experience", "skills1": "Programming", "skills2": "Data Analysis", "skills3": "Marketing", "skills4": "Security", "skills5": "Cloud Computing", "skills6": "Machine Learning", "certification1": "NSQF Level 4", "certification2": "NSQF Level 5", "certification3": "NSQF Level 6", "certification4": "NSQF Level 7", "certification5": "NSQF Level 8", "certification6": "NSQF Level 9"}'>English</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="hi" data-text='{"pageTitle": "करियर नेविगेटर - करियर एक्सप्लोरर", "pageDescription": "हमारे इंटरैक्टिव करियर एक्सप्लोरर के साथ NSQF पाठ्यक्रम और नौकरी भूमिकाओं का अन्वेषण करें", "navBrand": "करियरनव", "selectLanguage": "भाषा चुनें", "careerExplorer": "करियर एक्सप्लोरर", "exploreCareers": "करियर का अन्वेषण करें", "searchPlaceholder": "पाठ्यक्रम और नौकरियों की खोज करें...", "filterBy": "फिल्टर करें", "all": "सभी", "courses": "पाठ्यक्रम", "jobs": "नौकरी भूमिकाएं", "level": "स्तर", "sector": "क्षेत्र", "duration": "अवधि", "salary": "वेतन सीमा", "requirements": "आवश्यकताएं", "skills": "कौशल", "certification": "प्रमाणन", "applyNow": "अभी आवेदन करें", "learnMore": "और जानें", "viewDetails": "विवरण देखें", "noResults": "कोई परिणाम नहीं मिला", "tryDifferentSearch": "एक अलग खोज शब्द आज़माएं", "loading": "लोड हो रहा है...", "course1": "सॉफ्टवेयर विकास", "course2": "डेटा विश्लेषण", "course3": "डिजिटल मार्केटिंग", "course4": "साइबर सुरक्षा", "course5": "क्लाउड कंप्यूटिंग", "course6": "AI और मशीन लर्निंग", "job1": "सॉफ्टवेयर इंजीनियर", "job2": "डेटा वैज्ञानिक", "job3": "डिजिटल मार्केटर", "job4": "साइबर सुरक्षा विश्लेषक", "job5": "क्लाउड आर्किटेक्ट", "job6": "AI इंजीनियर", "level1": "स्तर 1", "level2": "स्तर 2", "level3": "स्तर 3", "level4": "स्तर 4", "level5": "स्तर 5", "level6": "स्तर 6", "level7": "स्तर 7", "level8": "स्तर 8", "level9": "स्तर 9", "level10": "स्तर 10", "sector1": "सूचना प्रौद्योगिकी", "sector2": "स्वास्थ्य सेवा", "sector3": "वित्त", "sector4": "विनिर्माण", "sector5": "शिक्षा", "sector6": "खुदरा", "duration1": "3 महीने", "duration2": "6 महीने", "duration3": "1 वर्ष", "duration4": "2 वर्ष", "salary1": "₹3-5 लाख प्रति वर्ष", "salary2": "₹5-8 लाख प्रति वर्ष", "salary3": "₹8-12 लाख प्रति वर्ष", "salary4": "₹12-20 लाख प्रति वर्ष", "salary5": "₹20+ लाख प्रति वर्ष", "requirements1": "बुनियादी कंप्यूटर ज्ञान", "requirements2": "हाई स्कूल डिप्लोमा", "requirements3": "स्नातक डिग्री", "requirements4": "स्नातकोत्तर डिग्री", "requirements5": "पेशेवर अनुभव", "skills1": "प्रोग्रामिंग", "skills2": "डेटा विश्लेषण", "skills3": "मार्केटिंग", "skills4": "सुरक्षा", "skills5": "क्लाउड कंप्यूटिंग", "skills6": "मशीन लर्निंग", "certification1": "NSQF स्तर 4", "certification2": "NSQF स्तर 5", "certification3": "NSQF स्तर 6", "certification4": "NSQF स्तर 7", "certification5": "NSQF स्तर 8", "certification6": "NSQF स्तर 9"}'>हिन्दी</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="ta" data-text='{"pageTitle": "தொழில் வழிகாட்டி - தொழில் ஆராய்ச்சியாளர்", "pageDescription": "எங்கள் இடைவினை தொழில் ஆராய்ச்சியாளருடன் NSQF படிப்புகள் மற்றும் வேலை பாத்திரங்களை ஆராயுங்கள்", "navBrand": "தொழில்வழி", "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்", "careerExplorer": "தொழில் ஆராய்ச்சியாளர்", "exploreCareers": "தொழில்களை ஆராயுங்கள்", "searchPlaceholder": "படிப்புகள் மற்றும் வேலைகளைத் தேடுங்கள்...", "filterBy": "வடிகட்டு", "all": "அனைத்தும்", "courses": "படிப்புகள்", "jobs": "வேலை பாத்திரங்கள்", "level": "நிலை", "sector": "துறை", "duration": "காலம்", "salary": "சம்பள வரம்பு", "requirements": "தேவைகள்", "skills": "திறன்கள்", "certification": "சான்றிதழ்", "applyNow": "இப்போது விண்ணப்பிக்கவும்", "learnMore": "மேலும் அறிக", "viewDetails": "விவரங்களைப் பாருங்கள்", "noResults": "முடிவுகள் எதுவும் கிடைக்கவில்லை", "tryDifferentSearch": "வேறு தேடல் சொல்லை முயற்சிக்கவும்", "loading": "ஏற்றப்படுகிறது...", "course1": "மென்பொருள் மேம்பாடு", "course2": "தரவு பகுப்பாய்வு", "course3": "டிஜிட்டல் மார்க்கெட்டிங்", "course4": "சைபர் பாதுகாப்பு", "course5": "கிளவுட் கம்ப்யூட்டிங்", "course6": "AI மற்றும் மெஷின் லர்னிங்", "job1": "மென்பொருள் பொறியாளர்", "job2": "தரவு விஞ்ஞானி", "job3": "டிஜிட்டல் மார்க்கெட்டர்", "job4": "சைபர் பாதுகாப்பு பகுப்பாய்வாளர்", "job5": "கிளவுட் கட்டிடக் கலைஞர்", "job6": "AI பொறியாளர்", "level1": "நிலை 1", "level2": "நிலை 2", "level3": "நிலை 3", "level4": "நிலை 4", "level5": "நிலை 5", "level6": "நிலை 6", "level7": "நிலை 7", "level8": "நிலை 8", "level9": "நிலை 9", "level10": "நிலை 10", "sector1": "தகவல் தொழில்நுட்பம்", "sector2": "சுகாதாரம்", "sector3": "நிதி", "sector4": "உற்பத்தி", "sector5": "கல்வி", "sector6": "சில்லறை", "duration1": "3 மாதங்கள்", "duration2": "6 மாதங்கள்", "duration3": "1 வருடம்", "duration4": "2 வருடங்கள்", "salary1": "₹3-5 லட்சம் ஆண்டுக்கு", "salary2": "₹5-8 லட்சம் ஆண்டுக்கு", "salary3": "₹8-12 லட்சம் ஆண்டுக்கு", "salary4": "₹12-20 லட்சம் ஆண்டுக்கு", "salary5": "₹20+ லட்சம் ஆண்டுக்கு", "requirements1": "அடிப்படை கணினி அறிவு", "requirements2": "உயர்நிலை பள்ளி டிப்ளமோ", "requirements3": "இளங்கலை பட்டம்", "requirements4": "முதுகலை பட்டம்", "requirements5": "தொழில்முறை அனுபவம்", "skills1": "நிரலாக்கம்", "skills2": "தரவு பகுப்பாய்வு", "skills3": "மார்க்கெட்டிங்", "skills4": "பாதுகாப்பு", "skills5": "கிளவுட் கம்ப்யூட்டிங்", "skills6": "மெஷின் லர்னிங்", "certification1": "NSQF நிலை 4", "certification2": "NSQF நிலை 5", "certification3": "NSQF நிலை 6", "certification4": "NSQF நிலை 7", "certification5": "NSQF நிலை 8", "certification6": "NSQF நிலை 9"}'>தமிழ்</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="bn" data-text='{"pageTitle": "ক্যারিয়ার নেভিগেটর - ক্যারিয়ার এক্সপ্লোরার", "pageDescription": "আমাদের ইন্টারঅ্যাক্টিভ ক্যারিয়ার এক্সপ্লোরারের সাথে NSQF কোর্স এবং চাকরির ভূমিকা অন্বেষণ করুন", "navBrand": "ক্যারিয়ারনেভ", "selectLanguage": "ভাষা নির্বাচন করুন", "careerExplorer": "ক্যারিয়ার এক্সপ্লোরার", "exploreCareers": "ক্যারিয়ার অন্বেষণ করুন", "searchPlaceholder": "কোর্স এবং চাকরি খুঁজুন...", "filterBy": "ফিল্টার করুন", "all": "সব", "courses": "কোর্স", "jobs": "চাকরির ভূমিকা", "level": "স্তর", "sector": "খাত", "duration": "সময়কাল", "salary": "বেতনের পরিসর", "requirements": "প্রয়োজনীয়তা", "skills": "দক্ষতা", "certification": "সার্টিফিকেশন", "applyNow": "এখনই আবেদন করুন", "learnMore": "আরও জানুন", "viewDetails": "বিস্তারিত দেখুন", "noResults": "কোন ফলাফল পাওয়া যায়নি", "tryDifferentSearch": "একটি ভিন্ন অনুসন্ধান শব্দ চেষ্টা করুন", "loading": "লোড হচ্ছে...", "course1": "সফ্টওয়্যার ডেভেলপমেন্ট", "course2": "ডেটা অ্যানালিটিক্স", "course3": "ডিজিটাল মার্কেটিং", "course4": "সাইবার সিকিউরিটি", "course5": "ক্লাউড কম্পিউটিং", "course6": "AI এবং মেশিন লার্নিং", "job1": "সফ্টওয়্যার ইঞ্জিনিয়ার", "job2": "ডেটা সায়েন্টিস্ট", "job3": "ডিজিটাল মার্কেটার", "job4": "সাইবার সিকিউরিটি অ্যানালিস্ট", "job5": "ক্লাউড আর্কিটেক্ট", "job6": "AI ইঞ্জিনিয়ার", "level1": "স্তর 1", "level2": "স্তর 2", "level3": "স্তর 3", "level4": "স্তর 4", "level5": "স্তর 5", "level6": "স্তর 6", "level7": "স্তর 7", "level8": "স্তর 8", "level9": "স্তর 9", "level10": "স্তর 10", "sector1": "তথ্য প্রযুক্তি", "sector2": "স্বাস্থ্যসেবা", "sector3": "অর্থসংস্থান", "sector4": "উৎপাদন", "sector5": "শিক্ষা", "sector6": "খুচরা", "duration1": "3 মাস", "duration2": "6 মাস", "duration3": "1 বছর", "duration4": "2 বছর", "salary1": "₹3-5 লাখ প্রতি বছর", "salary2": "₹5-8 লাখ প্রতি বছর", "salary3": "₹8-12 লাখ প্রতি বছর", "salary4": "₹12-20 লাখ প্রতি বছর", "salary5": "₹20+ লাখ প্রতি বছর", "requirements1": "বেসিক কম্পিউটার জ্ঞান", "requirements2": "হাই স্কুল ডিপ্লোমা", "requirements3": "স্নাতক ডিগ্রি", "requirements4": "স্নাতকোত্তর ডিগ্রি", "requirements5": "পেশাদার অভিজ্ঞতা", "skills1": "প্রোগ্রামিং", "skills2": "ডেটা অ্যানালিসিস", "skills3": "মার্কেটিং", "skills4": "নিরাপত্তা", "skills5": "ক্লাউড কম্পিউটিং", "skills6": "মেশিন লার্নিং", "certification1": "NSQF স্তর 4", "certification2": "NSQF স্তর 5", "certification3": "NSQF স্তর 6", "certification4": "NSQF স্তর 7", "certification5": "NSQF স্তর 8", "certification6": "NSQF স্তর 9"}'>বাংলা</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="gu" data-text='{"pageTitle": "કારિયર નેવિગેટર - કારિયર એક્સપ્લોરર", "pageDescription": "અમારા ઇન્ટરએક્ટિવ કારિયર એક્સપ્લોરર સાથે NSQF અભ્યાસક્રમો અને નોકરીની ભૂમિકાઓનું અન્વેષણ કરો", "navBrand": "કારિયરનવ", "selectLanguage": "ભાષા પસંદ કરો", "careerExplorer": "કારિયર એક્સપ્લોરર", "exploreCareers": "કારિયરનું અન્વેષણ કરો", "searchPlaceholder": "અભ્યાસક્રમો અને નોકરીઓ શોધો...", "filterBy": "ફિલ્ટર કરો", "all": "બધા", "courses": "અભ્યાસક્રમો", "jobs": "નોકરીની ભૂમિકાઓ", "level": "સ્તર", "sector": "ક્ષેત્ર", "duration": "અવધિ", "salary": "શેરીની રેન્જ", "requirements": "જરૂરિયાતો", "skills": "કૌશલ્યો", "certification": "પ્રમાણપત્ર", "applyNow": "હવે અરજી કરો", "learnMore": "વધુ જાણો", "viewDetails": "વિગતો જુઓ", "noResults": "કોઈ પરિણામ મળ્યું નથી", "tryDifferentSearch": "વિવિધ શોધ શબ્દ અજમાવો", "loading": "લોડ થઈ રહ્યું છે...", "course1": "સોફ્ટવેર ડેવલપમેન્ટ", "course2": "ડેટા એનાલિટિક્સ", "course3": "ડિજિટલ માર્કેટિંગ", "course4": "સાઇબર સુરક્ષા", "course5": "ક્લાઉડ કમ્પ્યુટિંગ", "course6": "AI અને મશીન લર્નિંગ", "job1": "સોફ્ટવેર એન્જિનિયર", "job2": "ડેટા સાયન્ટિસ્ટ", "job3": "ડિજિટલ માર્કેટર", "job4": "સાઇબર સુરક્ષા એનાલિસ્ટ", "job5": "ક્લાઉડ આર્કિટેક્ટ", "job6": "AI એન્જિનિયર", "level1": "સ્તર 1", "level2": "સ્તર 2", "level3": "સ્તર 3", "level4": "સ્તર 4", "level5": "સ્તર 5", "level6": "સ્તર 6", "level7": "સ્તર 7", "level8": "સ્તર 8", "level9": "સ્તર 9", "level10": "સ્તર 10", "sector1": "માહિતી ટેક્નોલોજી", "sector2": "આરોગ્યસેવા", "sector3": "નાણાકીય", "sector4": "ઉત્પાદન", "sector5": "શિક્ષણ", "sector6": "રિટેલ", "duration1": "3 મહિના", "duration2": "6 મહિના", "duration3": "1 વર્ષ", "duration4": "2 વર્ષ", "salary1": "₹3-5 લાખ વાર્ષિક", "salary2": "₹5-8 લાખ વાર્ષિક", "salary3": "₹8-12 લાખ વાર્ષિક", "salary4": "₹12-20 લાખ વાર્ષિક", "salary5": "₹20+ લાખ વાર્ષિક", "requirements1": "મૂળભૂત કમ્પ્યુટર જ્ઞાન", "requirements2": "હાઇ સ્કૂલ ડિપ્લોમા", "requirements3": "સ્નાતક ડિગ્રી", "requirements4": "સ્નાતકોત્તર ડિગ્રી", "requirements5": "વ્યાવસાયિક અનુભવ", "skills1": "પ્રોગ્રામિંગ", "skills2": "ડેટા એનાલિસિસ", "skills3": "માર્કેટિંગ", "skills4": "સુરક્ષા", "skills5": "ક્લાઉડ કમ્પ્યુટિંગ", "skills6": "મશીન લર્નિંગ", "certification1": "NSQF સ્તર 4", "certification2": "NSQF સ્તર 5", "certification3": "NSQF સ્તર 6", "certification4": "NSQF સ્તર 7", "certification5": "NSQF સ્તર 8", "certification6": "NSQF સ્તર 9"}'>ગુજરાતી</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Career Explorer Content -->
+        <div class="explorer-container">
+            <!-- Header -->
+            <div class="explorer-header">
+                <h2 class="explorer-title" id="careerExplorerTitle">Career Explorer</h2>
+                <p class="explorer-subtitle" id="exploreCareersSubtitle">Explore Careers</p>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search courses and jobs...">
+                        <button class="search-btn ripple" id="searchBtn">
+                            <span class="search-icon">🔍</span>
+                        </button>
+                        <div class="search-glow"></div>
+                    </div>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="filter-container">
+                    <h3 class="filter-title" id="filterByTitle">Filter by</h3>
+                    <div class="filter-options">
+                        <div class="filter-group">
+                            <label class="filter-label" id="typeLabel">Type</label>
+                            <div class="filter-checkboxes">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="filterAll" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="allText">All</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="filterCourses">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="coursesText">Courses</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="filterJobs">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="jobsText">Job Roles</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" id="levelLabel">Level</label>
+                            <div class="filter-checkboxes">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level1" value="1">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level1Text">Level 1</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level2" value="2">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level2Text">Level 2</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level3" value="3">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level3Text">Level 3</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level4" value="4">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level4Text">Level 4</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level5" value="5">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level5Text">Level 5</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="level6" value="6">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="level6Text">Level 6</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" id="sectorLabel">Sector</label>
+                            <div class="filter-checkboxes">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="sector1" value="IT">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="sector1Text">Information Technology</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="sector2" value="Healthcare">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="sector2Text">Healthcare</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="sector3" value="Finance">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="sector3Text">Finance</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="sector4" value="Manufacturing">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text" id="sector4Text">Manufacturing</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3 class="results-title" id="resultsTitle">Available Opportunities</h3>
+                    <div class="results-count" id="resultsCount">12 results</div>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div class="loading-indicator" id="loadingIndicator">
+                    <div class="loading-spinner"></div>
+                    <span class="loading-text" id="loadingText">Loading...</span>
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" id="noResults" style="display: none;">
+                    <div class="no-results-icon">🔍</div>
+                    <h3 class="no-results-title" id="noResultsTitle">No results found</h3>
+                    <p class="no-results-message" id="noResultsMessage">Try a different search term</p>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="cards-grid" id="cardsGrid">
+                    <!-- Cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'career-explorer-script.js' %}"></script>
+</body>
+</html>

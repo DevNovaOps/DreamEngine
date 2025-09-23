@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Recommendation Viewer</title>
+    <meta name="description" content="View your personalized career pathway and skill recommendations">
+    <link rel="stylesheet" href="{% static 'recommendation-viewer-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="learner-dashboard.html" class="logo-link">
+                        <h1 class="logo" id="navBrand">CareerNav</h1>
+                    </a>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="header-actions">
+                    <button class="back-btn" id="backBtn" aria-label="Go back">
+                        <span class="back-icon">←</span>
+                        <span class="back-text" id="backText">Back</span>
+                    </button>
+                    <button class="logout-btn" id="logoutBtn" aria-label="Logout">
+                        <span class="logout-icon">🚪</span>
+                        <span class="logout-text" id="logoutText">Logout</span>
+                    </button>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="en" data-text='{"pageTitle": "Career Navigator - Recommendation Viewer", "pageDescription": "View your personalized career pathway and skill recommendations", "navBrand": "CareerNav", "selectLanguage": "Select language", "recommendationViewer": "Recommendation Viewer", "viewRecommendations": "View Recommendations", "yourPathway": "Your Career Pathway", "recommendedSkills": "Recommended Skills", "milestones": "Milestones", "achievements": "Achievements", "nextSteps": "Next Steps", "skillLevel": "Skill Level", "progress": "Progress", "estimatedTime": "Estimated Time", "prerequisites": "Prerequisites", "resources": "Resources", "startLearning": "Start Learning", "markComplete": "Mark Complete", "viewDetails": "View Details", "congratulations": "Congratulations!", "milestoneUnlocked": "Milestone Unlocked", "skillMastered": "Skill Mastered", "pathwayComplete": "Pathway Complete", "continueJourney": "Continue Journey", "skill1": "Programming Fundamentals", "skill2": "Data Structures & Algorithms", "skill3": "Web Development", "skill4": "Database Management", "skill5": "API Development", "skill6": "Cloud Computing", "skill7": "DevOps", "skill8": "Machine Learning", "milestone1": "Complete Basic Programming", "milestone2": "Build First Web App", "milestone3": "Deploy to Cloud", "milestone4": "Master Full Stack", "milestone5": "Become Senior Developer", "achievement1": "Code Warrior", "achievement2": "Web Wizard", "achievement3": "Cloud Master", "achievement4": "Full Stack Hero", "achievement5": "Tech Leader", "level1": "Beginner", "level2": "Intermediate", "level3": "Advanced", "level4": "Expert", "time1": "2 weeks", "time2": "1 month", "time3": "2 months", "time4": "3 months", "time5": "6 months", "prereq1": "Basic computer knowledge", "prereq2": "Programming fundamentals", "prereq3": "Web development basics", "prereq4": "Database concepts", "prereq5": "API understanding", "prereq6": "Cloud basics", "prereq7": "System administration", "prereq8": "Statistics knowledge", "resource1": "Online tutorials", "resource2": "Coding bootcamp", "resource3": "Project practice", "resource4": "Database courses", "resource5": "API documentation", "resource6": "Cloud platforms", "resource7": "DevOps tools", "resource8": "ML frameworks"}'>English</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="hi" data-text='{"pageTitle": "करियर नेविगेटर - सिफारिश व्यूअर", "pageDescription": "अपने व्यक्तिगत करियर पथ और कौशल सिफारिशों को देखें", "navBrand": "करियरनव", "selectLanguage": "भाषा चुनें", "recommendationViewer": "सिफारिश व्यूअर", "viewRecommendations": "सिफारिशें देखें", "yourPathway": "आपका करियर पथ", "recommendedSkills": "अनुशंसित कौशल", "milestones": "माइलस्टोन", "achievements": "उपलब्धियां", "nextSteps": "अगले कदम", "skillLevel": "कौशल स्तर", "progress": "प्रगति", "estimatedTime": "अनुमानित समय", "prerequisites": "पूर्वापेक्षाएं", "resources": "संसाधन", "startLearning": "सीखना शुरू करें", "markComplete": "पूर्ण चिह्नित करें", "viewDetails": "विवरण देखें", "congratulations": "बधाई हो!", "milestoneUnlocked": "माइलस्टोन अनलॉक", "skillMastered": "कौशल में निपुण", "pathwayComplete": "पथ पूर्ण", "continueJourney": "यात्रा जारी रखें", "skill1": "प्रोग्रामिंग मूल बातें", "skill2": "डेटा संरचना और एल्गोरिदम", "skill3": "वेब विकास", "skill4": "डेटाबेस प्रबंधन", "skill5": "API विकास", "skill6": "क्लाउड कंप्यूटिंग", "skill7": "DevOps", "skill8": "मशीन लर्निंग", "milestone1": "बुनियादी प्रोग्रामिंग पूर्ण करें", "milestone2": "पहला वेब ऐप बनाएं", "milestone3": "क्लाउड पर तैनात करें", "milestone4": "फुल स्टैक में निपुण बनें", "milestone5": "सीनियर डेवलपर बनें", "achievement1": "कोड योद्धा", "achievement2": "वेब जादूगर", "achievement3": "क्लाउड मास्टर", "achievement4": "फुल स्टैक हीरो", "achievement5": "टेक लीडर", "level1": "शुरुआती", "level2": "मध्यम", "level3": "उन्नत", "level4": "विशेषज्ञ", "time1": "2 सप्ताह", "time2": "1 महीना", "time3": "2 महीने", "time4": "3 महीने", "time5": "6 महीने", "prereq1": "बुनियादी कंप्यूटर ज्ञान", "prereq2": "प्रोग्रामिंग मूल बातें", "prereq3": "वेब विकास मूल बातें", "prereq4": "डेटाबेस अवधारणाएं", "prereq5": "API समझ", "prereq6": "क्लाउड मूल बातें", "prereq7": "सिस्टम प्रशासन", "prereq8": "सांख्यिकी ज्ञान", "resource1": "ऑनलाइन ट्यूटोरियल", "resource2": "कोडिंग बूटकैंप", "resource3": "प्रोजेक्ट अभ्यास", "resource4": "डेटाबेस कोर्स", "resource5": "API दस्तावेज", "resource6": "क्लाउड प्लेटफॉर्म", "resource7": "DevOps उपकरण", "resource8": "ML फ्रेमवर्क"}'>हिन्दी</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="ta" data-text='{"pageTitle": "தொழில் வழிகாட்டி - பரிந்துரை காட்சியாளர்", "pageDescription": "உங்கள் தனிப்பட்ட தொழில் பாதை மற்றும் திறன் பரிந்துரைகளைப் பாருங்கள்", "navBrand": "தொழில்வழி", "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்", "recommendationViewer": "பரிந்துரை காட்சியாளர்", "viewRecommendations": "பரிந்துரைகளைப் பாருங்கள்", "yourPathway": "உங்கள் தொழில் பாதை", "recommendedSkills": "பரிந்துரைக்கப்பட்ட திறன்கள்", "milestones": "மைல்கற்கள்", "achievements": "சாதனைகள்", "nextSteps": "அடுத்த படிகள்", "skillLevel": "திறன் நிலை", "progress": "முன்னேற்றம்", "estimatedTime": "மதிப்பிடப்பட்ட நேரம்", "prerequisites": "முன்நிபந்தனைகள்", "resources": "வளங்கள்", "startLearning": "கற்றல் தொடங்க", "markComplete": "முடிந்ததாகக் குறிக்கவும்", "viewDetails": "விவரங்களைப் பாருங்கள்", "congratulations": "வாழ்த்துக்கள்!", "milestoneUnlocked": "மைல்கல் திறக்கப்பட்டது", "skillMastered": "திறன் மாஸ்டர்", "pathwayComplete": "பாதை முழுமையானது", "continueJourney": "பயணத்தைத் தொடரவும்", "skill1": "நிரலாக்க அடிப்படைகள்", "skill2": "தரவு கட்டமைப்புகள் மற்றும் வழிமுறைகள்", "skill3": "வெப் மேம்பாடு", "skill4": "தரவுத்தள மேலாண்மை", "skill5": "API மேம்பாடு", "skill6": "கிளவுட் கம்ப்யூட்டிங்", "skill7": "DevOps", "skill8": "மெஷின் லர்னிங்", "milestone1": "அடிப்படை நிரலாக்கத்தை முடிக்கவும்", "milestone2": "முதல் வெப் ஆப் உருவாக்கவும்", "milestone3": "கிளவுடில் வெளியிடவும்", "milestone4": "ஃபுல் ஸ்டாக் மாஸ்டர்", "milestone5": "சீனியர் டெவலப்பர் ஆகவும்", "achievement1": "கோட் வாரியர்", "achievement2": "வெப் விசார்ட்", "achievement3": "கிளவுட் மாஸ்டர்", "achievement4": "ஃபுல் ஸ்டாக் ஹீரோ", "achievement5": "டெக் லீடர்", "level1": "ஆரம்ப", "level2": "இடைநிலை", "level3": "மேம்பட்ட", "level4": "நிபுணர்", "time1": "2 வாரங்கள்", "time2": "1 மாதம்", "time3": "2 மாதங்கள்", "time4": "3 மாதங்கள்", "time5": "6 மாதங்கள்", "prereq1": "அடிப்படை கணினி அறிவு", "prereq2": "நிரலாக்க அடிப்படைகள்", "prereq3": "வெப் மேம்பாட்டு அடிப்படைகள்", "prereq4": "தரவுத்தள கருத்துகள்", "prereq5": "API புரிதல்", "prereq6": "கிளவுட் அடிப்படைகள்", "prereq7": "கணினி நிர்வாகம்", "prereq8": "புள்ளியியல் அறிவு", "resource1": "ஆன்லைன் டுடோரியல்கள்", "resource2": "கோடிங் பூட்கேம்ப்", "resource3": "திட்ட நடைமுறை", "resource4": "தரவுத்தள படிப்புகள்", "resource5": "API ஆவணங்கள்", "resource6": "கிளவுட் தளங்கள்", "resource7": "DevOps கருவிகள்", "resource8": "ML கட்டமைப்புகள்"}'>தமிழ்</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="bn" data-text='{"pageTitle": "ক্যারিয়ার নেভিগেটর - সুপারিশ দর্শক", "pageDescription": "আপনার ব্যক্তিগত ক্যারিয়ার পথ এবং দক্ষতার সুপারিশ দেখুন", "navBrand": "ক্যারিয়ারনেভ", "selectLanguage": "ভাষা নির্বাচন করুন", "recommendationViewer": "সুপারিশ দর্শক", "viewRecommendations": "সুপারিশ দেখুন", "yourPathway": "আপনার ক্যারিয়ার পথ", "recommendedSkills": "সুপারিশকৃত দক্ষতা", "milestones": "মাইলফলক", "achievements": "অর্জন", "nextSteps": "পরবর্তী পদক্ষেপ", "skillLevel": "দক্ষতার স্তর", "progress": "অগ্রগতি", "estimatedTime": "আনুমানিক সময়", "prerequisites": "পূর্বশর্ত", "resources": "সম্পদ", "startLearning": "শেখা শুরু করুন", "markComplete": "সম্পূর্ণ চিহ্নিত করুন", "viewDetails": "বিস্তারিত দেখুন", "congratulations": "অভিনন্দন!", "milestoneUnlocked": "মাইলফলক আনলক", "skillMastered": "দক্ষতা আয়ত্ত", "pathwayComplete": "পথ সম্পূর্ণ", "continueJourney": "যাত্রা চালিয়ে যান", "skill1": "প্রোগ্রামিং মৌলিক", "skill2": "ডেটা স্ট্রাকচার এবং অ্যালগরিদম", "skill3": "ওয়েব ডেভেলপমেন্ট", "skill4": "ডেটাবেস ম্যানেজমেন্ট", "skill5": "API ডেভেলপমেন্ট", "skill6": "ক্লাউড কম্পিউটিং", "skill7": "DevOps", "skill8": "মেশিন লার্নিং", "milestone1": "বেসিক প্রোগ্রামিং সম্পূর্ণ করুন", "milestone2": "প্রথম ওয়েব অ্যাপ তৈরি করুন", "milestone3": "ক্লাউডে ডেপ্লয় করুন", "milestone4": "ফুল স্ট্যাক মাস্টার", "milestone5": "সিনিয়র ডেভেলপার হন", "achievement1": "কোড ওয়ারিয়র", "achievement2": "ওয়েব উইজার্ড", "achievement3": "ক্লাউড মাস্টার", "achievement4": "ফুল স্ট্যাক হিরো", "achievement5": "টেক লিডার", "level1": "শুরু", "level2": "মধ্যম", "level3": "উন্নত", "level4": "বিশেষজ্ঞ", "time1": "2 সপ্তাহ", "time2": "1 মাস", "time3": "2 মাস", "time4": "3 মাস", "time5": "6 মাস", "prereq1": "বেসিক কম্পিউটার জ্ঞান", "prereq2": "প্রোগ্রামিং মৌলিক", "prereq3": "ওয়েব ডেভেলপমেন্ট মৌলিক", "prereq4": "ডেটাবেস ধারণা", "prereq5": "API বোঝাপড়া", "prereq6": "ক্লাউড মৌলিক", "prereq7": "সিস্টেম অ্যাডমিনিস্ট্রেশন", "prereq8": "পরিসংখ্যান জ্ঞান", "resource1": "অনলাইন টিউটোরিয়াল", "resource2": "কোডিং বুটক্যাম্প", "resource3": "প্রজেক্ট অনুশীলন", "resource4": "ডেটাবেস কোর্স", "resource5": "API ডকুমেন্টেশন", "resource6": "ক্লাউড প্ল্যাটফর্ম", "resource7": "DevOps টুলস", "resource8": "ML ফ্রেমওয়ার্ক"}'>বাংলা</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="gu" data-text='{"pageTitle": "કારિયર નેવિગેટર - ભલામણ દર્શક", "pageDescription": "તમારા વ્યક્તિગત કારિયર પથ અને કૌશલ્ય ભલામણો જુઓ", "navBrand": "કારિયરનવ", "selectLanguage": "ભાષા પસંદ કરો", "recommendationViewer": "ભલામણ દર્શક", "viewRecommendations": "ભલામણો જુઓ", "yourPathway": "તમારો કારિયર પથ", "recommendedSkills": "ભલામણ કરેલ કૌશલ્યો", "milestones": "માઇલસ્ટોન", "achievements": "પ્રાપ્તિઓ", "nextSteps": "આગળના પગલાં", "skillLevel": "કૌશલ્ય સ્તર", "progress": "પ્રગતિ", "estimatedTime": "અંદાજિત સમય", "prerequisites": "પૂર્વશરતો", "resources": "સંસાધનો", "startLearning": "શીખવાનું શરૂ કરો", "markComplete": "પૂર્ણ ચિહ્નિત કરો", "viewDetails": "વિગતો જુઓ", "congratulations": "અભિનંદન!", "milestoneUnlocked": "માઇલસ્ટોન અનલૉક", "skillMastered": "કૌશલ્ય માસ્ટર", "pathwayComplete": "પથ પૂર્ણ", "continueJourney": "યાત્રા ચાલુ રાખો", "skill1": "પ્રોગ્રામિંગ મૂળભૂત", "skill2": "ડેટા સ્ટ્રક્ચર અને એલ્ગોરિધમ્સ", "skill3": "વેબ ડેવલપમેન્ટ", "skill4": "ડેટાબેસ મેનેજમેન્ટ", "skill5": "API ડેવલપમેન્ટ", "skill6": "ક્લાઉડ કમ્પ્યુટિંગ", "skill7": "DevOps", "skill8": "મશીન લર્નિંગ", "milestone1": "મૂળભૂત પ્રોગ્રામિંગ પૂર્ણ કરો", "milestone2": "પહેલું વેબ એપ બનાવો", "milestone3": "ક્લાઉડ પર ડેપ્લોય કરો", "milestone4": "ફુલ સ્ટેક માસ્ટર", "milestone5": "સિનિયર ડેવલપર બનો", "achievement1": "કોડ વોરિયર", "achievement2": "વેબ વિઝાર્ડ", "achievement3": "ક્લાઉડ માસ્ટર", "achievement4": "ફુલ સ્ટેક હીરો", "achievement5": "ટેક લીડર", "level1": "શરૂઆત", "level2": "મધ્યમ", "level3": "અદ્યતન", "level4": "નિષ્ણાત", "time1": "2 અઠવાડિયા", "time2": "1 મહિના", "time3": "2 મહિના", "time4": "3 મહિના", "time5": "6 મહિના", "prereq1": "મૂળભૂત કમ્પ્યુટર જ્ઞાન", "prereq2": "પ્રોગ્રામિંગ મૂળભૂત", "prereq3": "વેબ ડેવલપમેન્ટ મૂળભૂત", "prereq4": "ડેટાબેસ ખ્યાલો", "prereq5": "API સમજ", "prereq6": "ક્લાઉડ મૂળભૂત", "prereq7": "સિસ્ટમ એડમિનિસ્ટ્રેશન", "prereq8": "આંકડાશાસ્ત્ર જ્ઞાન", "resource1": "ઓનલાઇન ટ્યુટોરિયલ", "resource2": "કોડિંગ બૂટકેમ્પ", "resource3": "પ્રોજેક્ટ પ્રેક્ટિસ", "resource4": "ડેટાબેસ કોર્સ", "resource5": "API ડોક્યુમેન્ટેશન", "resource6": "ક્લાઉડ પ્લેટફોર્મ", "resource7": "DevOps ટૂલ્સ", "resource8": "ML ફ્રેમવર્ક"}'>ગુજરાતી</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Recommendation Viewer Content -->
+        <div class="viewer-container">
+            <!-- Header -->
+            <div class="viewer-header">
+                <h2 class="viewer-title" id="recommendationViewerTitle">Recommendation Viewer</h2>
+                <p class="viewer-subtitle" id="viewRecommendationsSubtitle">View Recommendations</p>
+            </div>
+
+            <!-- Pathway Overview -->
+            <div class="pathway-overview">
+                <h3 class="section-title" id="yourPathwayTitle">Your Career Pathway</h3>
+                <div class="pathway-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">🎯</div>
+                        <div class="summary-content">
+                            <h4 class="summary-title" id="milestonesTitle">Milestones</h4>
+                            <p class="summary-value">5</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">🏆</div>
+                        <div class="summary-content">
+                            <h4 class="summary-title" id="achievementsTitle">Achievements</h4>
+                            <p class="summary-value">3</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">📈</div>
+                        <div class="summary-content">
+                            <h4 class="summary-title" id="progressTitle">Progress</h4>
+                            <p class="summary-value">60%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Roadmap -->
+            <div class="skills-roadmap">
+                <h3 class="section-title" id="recommendedSkillsTitle">Recommended Skills</h3>
+                <div class="roadmap-container">
+                    <div class="roadmap-path">
+                        <!-- Skills will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Milestones Timeline -->
+            <div class="milestones-timeline">
+                <h3 class="section-title" id="milestonesTimelineTitle">Milestones Timeline</h3>
+                <div class="timeline-container">
+                    <div class="timeline-path">
+                        <!-- Milestones will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Gallery -->
+            <div class="achievements-gallery">
+                <h3 class="section-title" id="achievementsGalleryTitle">Achievements</h3>
+                <div class="achievements-grid">
+                    <!-- Achievements will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <h3 class="section-title" id="nextStepsTitle">Next Steps</h3>
+                <div class="steps-container">
+                    <!-- Next steps will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Skill Detail Modal -->
+    <div class="skill-modal" id="skillModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-header">
+                <div class="modal-icon" id="modalIcon">💻</div>
+                <h3 class="modal-title" id="modalTitle">Skill Title</h3>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4 class="modal-section-title" id="skillLevelTitle">Skill Level</h4>
+                    <p class="modal-section-content" id="modalSkillLevel">Intermediate</p>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section-title" id="estimatedTimeTitle">Estimated Time</h4>
+                    <p class="modal-section-content" id="modalEstimatedTime">2 months</p>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section-title" id="prerequisitesTitle">Prerequisites</h4>
+                    <p class="modal-section-content" id="modalPrerequisites">Basic programming knowledge</p>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section-title" id="resourcesTitle">Resources</h4>
+                    <p class="modal-section-content" id="modalResources">Online tutorials, coding bootcamp</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary ripple" id="startLearningBtn">
+                    <span id="startLearningText">Start Learning</span>
+                </button>
+                <button class="modal-btn modal-btn-secondary ripple" id="markCompleteBtn">
+                    <span id="markCompleteText">Mark Complete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">🎉</div>
+            <h3 class="success-title" id="successTitle">Congratulations!</h3>
+            <p class="success-message" id="successMessage">Milestone Unlocked</p>
+            <button class="continue-btn ripple" id="continueBtn">
+                <span id="continueText">Continue Journey</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="{% static 'recommendation-viewer-script.js' %}"></script>
+</body>
+</html>
+

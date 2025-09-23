@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Learner Dashboard</title>
+    <meta name="description" content="Your personalized learning dashboard for career development">
+    <link rel="stylesheet" href="{% static 'dashboard-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo-link">
+                        <h1 class="logo" id="navBrand">CareerNav</h1>
+                    </a>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="en" data-text='{"pageTitle": "Career Navigator - Learner Dashboard", "pageDescription": "Your personalized learning dashboard for career development", "navBrand": "CareerNav", "selectLanguage": "Select language", "welcome": "Welcome back", "profileCard": "Profile Card", "learningProgress": "Learning Progress", "quickActions": "Quick Actions", "profileBuilder": "Profile Builder", "careerExplorer": "Career Explorer", "recommendationViewer": "Recommendation Viewer", "motivationalQuote": "Motivational Quote", "logout": "Logout", "settings": "Settings", "notifications": "Notifications", "currentLevel": "Current Level", "nextMilestone": "Next Milestone", "skillsLearned": "Skills Learned", "hoursSpent": "Hours Spent", "coursesCompleted": "Courses Completed", "achievements": "Achievements", "buildProfile": "Build Your Profile", "exploreCareers": "Explore Careers", "viewRecommendations": "View Recommendations", "quote1": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "quote2": "The future belongs to those who believe in the beauty of their dreams.", "quote3": "Education is the most powerful weapon which you can use to change the world.", "quote4": "The only way to do great work is to love what you do.", "quote5": "Innovation distinguishes between a leader and a follower."}'>English</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="hi" data-text='{"pageTitle": "करियर नेविगेटर - लर्नर डैशबोर्ड", "pageDescription": "करियर विकास के लिए आपका व्यक्तिगत शिक्षण डैशबोर्ड", "navBrand": "करियरनव", "selectLanguage": "भाषा चुनें", "welcome": "वापस स्वागत है", "profileCard": "प्रोफाइल कार्ड", "learningProgress": "सीखने की प्रगति", "quickActions": "त्वरित कार्य", "profileBuilder": "प्रोफाइल बिल्डर", "careerExplorer": "करियर एक्सप्लोरर", "recommendationViewer": "सिफारिश व्यूअर", "motivationalQuote": "प्रेरणादायक उद्धरण", "logout": "लॉगआउट", "settings": "सेटिंग्स", "notifications": "सूचनाएं", "currentLevel": "वर्तमान स्तर", "nextMilestone": "अगला माइलस्टोन", "skillsLearned": "सीखे गए कौशल", "hoursSpent": "बिताए गए घंटे", "coursesCompleted": "पूर्ण किए गए पाठ्यक्रम", "achievements": "उपलब्धियां", "buildProfile": "अपना प्रोफाइल बनाएं", "exploreCareers": "करियर का अन्वेषण करें", "viewRecommendations": "सिफारिशें देखें", "quote1": "सफलता अंतिम नहीं है, असफलता घातक नहीं है: जारी रखने का साहस ही मायने रखता है।", "quote2": "भविष्य उनका है जो अपने सपनों की सुंदरता में विश्वास करते हैं।", "quote3": "शिक्षा सबसे शक्तिशाली हथियार है जिसका उपयोग आप दुनिया को बदलने के लिए कर सकते हैं।", "quote4": "महान काम करने का एकमात्र तरीका यह है कि आप जो करते हैं उससे प्यार करें।", "quote5": "नवाचार एक नेता और अनुयायी के बीच अंतर करता है।"}'>हिन्दी</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="ta" data-text='{"pageTitle": "தொழில் வழிகாட்டி - கற்றவர் டாஷ்போர்டு", "pageDescription": "தொழில் வளர்ச்சிக்கான உங்கள் தனிப்பட்ட கற்றல் டாஷ்போர்டு", "navBrand": "தொழில்வழி", "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்", "welcome": "மீண்டும் வரவேற்கிறோம்", "profileCard": "சுயவிவர அட்டை", "learningProgress": "கற்றல் முன்னேற்றம்", "quickActions": "விரைவு செயல்கள்", "profileBuilder": "சுயவிவர கட்டுநர்", "careerExplorer": "தொழில் ஆராய்ச்சியாளர்", "recommendationViewer": "பரிந்துரை காட்சியாளர்", "motivationalQuote": "உத்வேகமளிக்கும் மேற்கோள்", "logout": "வெளியேறு", "settings": "அமைப்புகள்", "notifications": "அறிவிப்புகள்", "currentLevel": "தற்போதைய நிலை", "nextMilestone": "அடுத்த மைல்கல்", "skillsLearned": "கற்ற திறன்கள்", "hoursSpent": "செலவழித்த மணிநேரங்கள்", "coursesCompleted": "முடிக்கப்பட்ட படிப்புகள்", "achievements": "சாதனைகள்", "buildProfile": "உங்கள் சுயவிவரத்தை உருவாக்குங்கள்", "exploreCareers": "தொழில்களை ஆராயுங்கள்", "viewRecommendations": "பரிந்துரைகளைப் பாருங்கள்", "quote1": "வெற்றி இறுதியானது அல்ல, தோல்வி மரணமானது அல்ல: தொடர்ந்து செல்லும் தைரியம்தான் முக்கியம்.", "quote2": "எதிர்காலம் தங்கள் கனவுகளின் அழகில் நம்பிக்கை வைத்தவர்களுக்கு சொந்தமானது.", "quote3": "கல்வி என்பது உலகை மாற்ற நீங்கள் பயன்படுத்தக்கூடிய மிகவும் சக்திவாய்ந்த ஆயுதம்.", "quote4": "சிறந்த வேலை செய்ய ஒரே வழி, நீங்கள் செய்வதை நேசிப்பதுதான்.", "quote5": "புதுமை ஒரு தலைவர் மற்றும் பின்பற்றுபவருக்கு இடையே வேறுபாட்டை ஏற்படுத்துகிறது."}'>தமிழ்</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="bn" data-text='{"pageTitle": "ক্যারিয়ার নেভিগেটর - লার্নার ড্যাশবোর্ড", "pageDescription": "ক্যারিয়ার উন্নয়নের জন্য আপনার ব্যক্তিগত শিক্ষার ড্যাশবোর্ড", "navBrand": "ক্যারিয়ারনেভ", "selectLanguage": "ভাষা নির্বাচন করুন", "welcome": "ফিরে স্বাগতম", "profileCard": "প্রোফাইল কার্ড", "learningProgress": "শেখার অগ্রগতি", "quickActions": "দ্রুত কর্ম", "profileBuilder": "প্রোফাইল বিল্ডার", "careerExplorer": "ক্যারিয়ার এক্সপ্লোরার", "recommendationViewer": "সুপারিশ দর্শক", "motivationalQuote": "প্রেরণাদায়ক উক্তি", "logout": "লগআউট", "settings": "সেটিংস", "notifications": "বিজ্ঞপ্তি", "currentLevel": "বর্তমান স্তর", "nextMilestone": "পরবর্তী মাইলফলক", "skillsLearned": "শেখা দক্ষতা", "hoursSpent": "ব্যয়িত ঘন্টা", "coursesCompleted": "সম্পূর্ণ কোর্স", "achievements": "অর্জন", "buildProfile": "আপনার প্রোফাইল তৈরি করুন", "exploreCareers": "ক্যারিয়ার অন্বেষণ করুন", "viewRecommendations": "সুপারিশ দেখুন", "quote1": "সাফল্য চূড়ান্ত নয়, ব্যর্থতা মারাত্মক নয়: এগিয়ে যাওয়ার সাহসই গুরুত্বপূর্ণ।", "quote2": "ভবিষ্যত তাদের যারা তাদের স্বপ্নের সৌন্দর্যে বিশ্বাস করে।", "quote3": "শিক্ষা সবচেয়ে শক্তিশালী অস্ত্র যা আপনি বিশ্বকে পরিবর্তন করতে ব্যবহার করতে পারেন।", "quote4": "মহান কাজ করার একমাত্র উপায় হল আপনি যা করেন তা ভালবাসা।", "quote5": "নবাচার একজন নেতা এবং অনুসরণকারীর মধ্যে পার্থক্য করে।"}'>বাংলা</button>
+                        </li>
+                        <li role="menuitem">
+                            <button class="lang-option" data-lang="gu" data-text='{"pageTitle": "કારિયર નેવિગેટર - લર્નર ડેશબોર્ડ", "pageDescription": "કારિયર વિકાસ માટે તમારું વ્યક્તિગત શિક્ષણ ડેશબોર્ડ", "navBrand": "કારિયરનવ", "selectLanguage": "ભાષા પસંદ કરો", "welcome": "પાછા સ્વાગત છે", "profileCard": "પ્રોફાઇલ કાર્ડ", "learningProgress": "શીખવાની પ્રગતિ", "quickActions": "ઝડપી ક્રિયાઓ", "profileBuilder": "પ્રોફાઇલ બિલ્ડર", "careerExplorer": "કારિયર એક્સપ્લોરર", "recommendationViewer": "ભલામણ દર્શક", "motivationalQuote": "પ્રેરણાદાયક ઉદ્ધરણ", "logout": "લોગઆઉટ", "settings": "સેટિંગ્સ", "notifications": "સૂચનાઓ", "currentLevel": "વર્તમાન સ્તર", "nextMilestone": "આગળનું માઇલસ્ટોન", "skillsLearned": "શીખેલ કૌશલ્યો", "hoursSpent": "ખર્ચાયેલા કલાકો", "coursesCompleted": "પૂર્ણ કરેલા અભ્યાસક્રમો", "achievements": "પ્રાપ્તિઓ", "buildProfile": "તમારું પ્રોફાઇલ બનાવો", "exploreCareers": "કારિયરનું અન્વેષણ કરો", "viewRecommendations": "ભલામણો જુઓ", "quote1": "સફળતા અંતિમ નથી, નિષ્ફળતા ઘાતક નથી: ચાલુ રાખવાની હિંમત જ મહત્વની છે।", "quote2": "ભવિષ્ય તેમનું છે જે પોતાના સપનાઓની સુંદરતામાં વિશ્વાસ રાખે છે।", "quote3": "શિક્ષા સૌથી શક્તિશાળી શસ્ત્ર છે જેનો ઉપયોગ તમે વિશ્વને બદલવા માટે કરી શકો છો।", "quote4": "મહાન કામ કરવાનો એકમાત્ર રસ્તો એ છે કે તમે જે કરો છો તેને પ્રેમ કરો।", "quote5": "નવીનતા એક નેતા અને અનુયાયી વચ્ચે તફાવત કરે છે।"}'>ગુજરાતી</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h2 class="welcome-title" id="welcomeTitle">Welcome back, Learner!</h2>
+                <p class="welcome-subtitle" id="welcomeSubtitle">Ready to continue your learning journey?</p>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Profile Card -->
+                <div class="profile-card" id="profileCard">
+                    <div class="card-header">
+                        <h3 class="card-title" id="profileCardTitle">Profile Card</h3>
+                        <div class="profile-avatar">
+                            <div class="avatar-circle">
+                                <span class="avatar-text">L</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Alex Johnson</h4>
+                        <p class="profile-role">Software Developer</p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">85%</span>
+                                <span class="stat-label" id="currentLevel">Current Level</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label" id="skillsLearned">Skills Learned</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Progress -->
+                <div class="progress-section">
+                    <h3 class="section-title" id="learningProgressTitle">Learning Progress</h3>
+                    <div class="progress-rings">
+                        <div class="progress-ring">
+                            <div class="ring-container">
+                                <svg class="progress-svg" viewBox="0 0 100 100">
+                                    <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="progress-bar" cx="50" cy="50" r="45" id="progressCircle1"></circle>
+                                </svg>
+                                <div class="progress-text">
+                                    <span class="progress-number" id="progressNumber1">75%</span>
+                                    <span class="progress-label" id="coursesCompleted">Courses</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-ring">
+                            <div class="ring-container">
+                                <svg class="progress-svg" viewBox="0 0 100 100">
+                                    <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="progress-bar" cx="50" cy="50" r="45" id="progressCircle2"></circle>
+                                </svg>
+                                <div class="progress-text">
+                                    <span class="progress-number" id="progressNumber2">120</span>
+                                    <span class="progress-label" id="hoursSpent">Hours</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-ring">
+                            <div class="ring-container">
+                                <svg class="progress-svg" viewBox="0 0 100 100">
+                                    <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="progress-bar" cx="50" cy="50" r="45" id="progressCircle3"></circle>
+                                </svg>
+                                <div class="progress-text">
+                                    <span class="progress-number" id="progressNumber3">8</span>
+                                    <span class="progress-label" id="achievements">Badges</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3 class="section-title" id="quickActionsTitle">Quick Actions</h3>
+                    <div class="action-cards">
+                        <div class="action-card" id="profileBuilderCard">
+                            <div class="card-icon">👤</div>
+                            <h4 class="card-title" id="profileBuilderTitle">Profile Builder</h4>
+                            <p class="card-description" id="buildProfileDesc">Build Your Profile</p>
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="action-card" id="careerExplorerCard">
+                            <div class="card-icon">🔍</div>
+                            <h4 class="card-title" id="careerExplorerTitle">Career Explorer</h4>
+                            <p class="card-description" id="exploreCareersDesc">Explore Careers</p>
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="action-card" id="recommendationViewerCard">
+                            <div class="card-icon">💡</div>
+                            <h4 class="card-title" id="recommendationViewerTitle">Recommendation Viewer</h4>
+                            <p class="card-description" id="viewRecommendationsDesc">View Recommendations</p>
+                            <div class="card-glow"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-section">
+                    <h3 class="section-title" id="motivationalQuoteTitle">Motivational Quote</h3>
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <p class="quote-text" id="quoteText">Success is not final, failure is not fatal: it is the courage to continue that counts.</p>
+                            <p class="quote-author" id="quoteAuthor">- Winston Churchill</p>
+                        </div>
+                        <div class="quote-icon">💫</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chatbot Assistant -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <!-- Floating Chat Icon -->
+        <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open AI Career Assistant">
+            <div class="chat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring-2"></div>
+        </button>
+
+        <!-- Chat Window -->
+        <div class="chatbot-window" id="chatbotWindow">
+            <!-- Chat Header -->
+            <div class="chatbot-header">
+                <div class="header-content">
+                    <div class="assistant-info">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                        </div>
+                        <h3 class="assistant-title" id="assistantTitle">AI Career Assistant</h3>
+                    </div>
+                    <div class="header-actions">
+                        <!-- Language Toggle -->
+                        <div class="chatbot-language-selector">
+                            <button class="chatbot-lang-btn" id="chatbotLangBtn" aria-label="Select language">
+                                <span class="lang-icon">🌐</span>
+                                <span class="current-lang" data-lang="en">EN</span>
+                            </button>
+                            <ul class="chatbot-lang-dropdown" id="chatbotLangDropdown">
+                                <li><button class="lang-option" data-lang="en">English</button></li>
+                                <li><button class="lang-option" data-lang="hi">हिन्दी</button></li>
+                                <li><button class="lang-option" data-lang="ta">தமிழ்</button></li>
+                                <li><button class="lang-option" data-lang="bn">বাংলা</button></li>
+                                <li><button class="lang-option" data-lang="gu">ગુજરાતી</button></li>
+                            </ul>
+                        </div>
+                        <button class="minimize-btn" id="minimizeBtn" aria-label="Minimize chat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="welcome-message">
+                    <div class="message bot-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p id="welcomeText">Hello! I'm your AI Career Assistant. How can I help you today?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <!-- Input Area -->
+            <div class="chatbot-input-area">
+                <div class="input-container">
+                    <input type="text" 
+                           class="chatbot-input" 
+                           id="chatbotInput" 
+                           placeholder="Type your message here..."
+                           aria-label="Type your message">
+                    <button class="send-btn" id="sendBtn" aria-label="Send message">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'dashboard-script.js' %}"></script>
+    <script src="{% static 'chatbot-script.js' %}"></script>
+</body>
+</html>

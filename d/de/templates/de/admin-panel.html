@@ -1,0 +1,350 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Admin Panel</title>
+    <meta name="description" content="Administrative dashboard for Career Navigator and Personalized Skilling Assistant">
+    <link rel="stylesheet" href="{% static 'admin-panel-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="floating-shapes"></div>
+    </div>
+    <div class="admin-container">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+        
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <div class="admin-logo">
+                    <div class="logo-icon">⚡</div>
+                    <h2 class="logo-text" id="adminLogoText">Admin Panel</h2>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link" data-section="dashboard">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text" id="navDashboard">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#learners" class="nav-link" data-section="learners">
+                            <span class="nav-icon">👥</span>
+                            <span class="nav-text" id="navLearners">Learners</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#courses" class="nav-link" data-section="courses">
+                            <span class="nav-icon">📚</span>
+                            <span class="nav-text" id="navCourses">Courses</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#analytics" class="nav-link" data-section="analytics">
+                            <span class="nav-icon">📈</span>
+                            <span class="nav-text" id="navAnalytics">Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#skills" class="nav-link" data-section="skills">
+                            <span class="nav-icon">🎯</span>
+                            <span class="nav-text" id="navSkills">Skills</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reports" class="nav-link" data-section="reports">
+                            <span class="nav-icon">📋</span>
+                            <span class="nav-text" id="navReports">Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link" data-section="settings">
+                            <span class="nav-icon">⚙️</span>
+                            <span class="nav-text" id="navSettings">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-profile">
+                    <div class="profile-avatar">
+                        <span class="avatar-text">A</span>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name" id="adminName">Admin User</div>
+                        <div class="profile-role" id="adminRole">System Administrator</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <span class="logout-icon">🚪</span>
+                    <span class="logout-text" id="logoutText">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="admin-main">
+            <!-- Top Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">Dashboard Overview</h1>
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-item" id="breadcrumbHome">Home</span>
+                        <span class="breadcrumb-separator">›</span>
+                        <span class="breadcrumb-item active" id="breadcrumbCurrent">Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="language-btn" id="languageBtn" aria-label="Select language">
+                            <span class="language-icon">🌐</span>
+                            <span class="current-lang" data-lang="en">English</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <ul class="language-dropdown" id="languageDropdown">
+                            <li><button class="lang-option" data-lang="en" data-text='{"pageTitle": "Dashboard Overview", "navDashboard": "Dashboard", "navLearners": "Learners", "navCourses": "Courses", "navAnalytics": "Analytics", "navSkills": "Skills", "navReports": "Reports", "navSettings": "Settings", "adminName": "Admin User", "adminRole": "System Administrator", "logoutText": "Logout", "breadcrumbHome": "Home", "breadcrumbCurrent": "Dashboard", "totalLearnersLabel": "Total Learners", "totalCoursesLabel": "Active Courses", "completionRateLabel": "Completion Rate", "avgRatingLabel": "Avg Rating", "learnerGrowthTitle": "Learner Growth", "skillDemandTitle": "Top Skills in Demand", "courseCompletionTitle": "Course Completion", "recentActivityTitle": "Recent Activity", "refreshText": "Refresh", "userColumn": "User", "actionColumn": "Action", "courseColumn": "Course", "timeColumn": "Time", "statusColumn": "Status", "learnersPlaceholder": "Learners Management", "learnersPlaceholderText": "This section will contain learner management features.", "coursesPlaceholder": "Courses Management", "coursesPlaceholderText": "This section will contain course management features.", "analyticsPlaceholder": "Analytics Dashboard", "analyticsPlaceholderText": "This section will contain detailed analytics and insights.", "skillsPlaceholder": "Skills Management", "skillsPlaceholderText": "This section will contain skills tracking and management.", "reportsPlaceholder": "Reports & Insights", "reportsPlaceholderText": "This section will contain comprehensive reports and insights.", "settingsPlaceholder": "System Settings", "settingsPlaceholderText": "This section will contain system configuration and settings."}'>English</button></li>
+                            <li><button class="lang-option" data-lang="hi" data-text='{"pageTitle": "डैशबोर्ड अवलोकन", "navDashboard": "डैशबोर्ड", "navLearners": "लर्नर्स", "navCourses": "कोर्स", "navAnalytics": "विश्लेषण", "navSkills": "कौशल", "navReports": "रिपोर्ट्स", "navSettings": "सेटिंग्स", "adminName": "एडमिन यूजर", "adminRole": "सिस्टम व्यवस्थापक", "logoutText": "लॉगआउट", "breadcrumbHome": "होम", "breadcrumbCurrent": "डैशबोर्ड", "totalLearnersLabel": "कुल लर्नर्स", "totalCoursesLabel": "सक्रिय कोर्स", "completionRateLabel": "पूर्णता दर", "avgRatingLabel": "औसत रेटिंग", "learnerGrowthTitle": "लर्नर वृद्धि", "skillDemandTitle": "मांग में शीर्ष कौशल", "courseCompletionTitle": "कोर्स पूर्णता", "recentActivityTitle": "हाल की गतिविधि", "refreshText": "रिफ्रेश", "userColumn": "उपयोगकर्ता", "actionColumn": "कार्य", "courseColumn": "कोर्स", "timeColumn": "समय", "statusColumn": "स्थिति", "learnersPlaceholder": "लर्नर प्रबंधन", "learnersPlaceholderText": "इस अनुभाग में लर्नर प्रबंधन सुविधाएं होंगी।", "coursesPlaceholder": "कोर्स प्रबंधन", "coursesPlaceholderText": "इस अनुभाग में कोर्स प्रबंधन सुविधाएं होंगी।", "analyticsPlaceholder": "विश्लेषण डैशबोर्ड", "analyticsPlaceholderText": "इस अनुभाग में विस्तृत विश्लेषण और अंतर्दृष्टि होंगी।", "skillsPlaceholder": "कौशल प्रबंधन", "skillsPlaceholderText": "इस अनुभाग में कौशल ट्रैकिंग और प्रबंधन होगा।", "reportsPlaceholder": "रिपोर्ट और अंतर्दृष्टि", "reportsPlaceholderText": "इस अनुभाग में व्यापक रिपोर्ट और अंतर्दृष्टि होंगी।", "settingsPlaceholder": "सिस्टम सेटिंग्स", "settingsPlaceholderText": "इस अनुभाग में सिस्टम कॉन्फ़िगरेशन और सेटिंग्स होंगी।"}'>हिन्दी</button></li>
+                            <li><button class="lang-option" data-lang="ta" data-text='{"pageTitle": "டாஷ்போர்டு கண்ணோட்டம்", "navDashboard": "டாஷ்போர்டு", "navLearners": "கற்றவர்கள்", "navCourses": "படிப்புகள்", "navAnalytics": "பகுப்பாய்வு", "navSkills": "திறன்கள்", "navReports": "அறிக்கைகள்", "navSettings": "அமைப்புகள்", "adminName": "நிர்வாக பயனர்", "adminRole": "கணினி நிர்வாகி", "logoutText": "வெளியேறு", "breadcrumbHome": "வீடு", "breadcrumbCurrent": "டாஷ்போர்டு", "totalLearnersLabel": "மொத்த கற்றவர்கள்", "totalCoursesLabel": "செயலில் உள்ள படிப்புகள்", "completionRateLabel": "முடிவு விகிதம்", "avgRatingLabel": "சராசரி மதிப்பீடு", "learnerGrowthTitle": "கற்றவர் வளர்ச்சி", "skillDemandTitle": "தேவையில் உள்ள முதன்மை திறன்கள்", "courseCompletionTitle": "படிப்பு முடிவு", "recentActivityTitle": "சமீபத்திய செயல்பாடு", "refreshText": "புதுப்பி", "userColumn": "பயனர்", "actionColumn": "செயல்", "courseColumn": "படிப்பு", "timeColumn": "நேரம்", "statusColumn": "நிலை", "learnersPlaceholder": "கற்றவர் மேலாண்மை", "learnersPlaceholderText": "இந்த பிரிவில் கற்றவர் மேலாண்மை அம்சங்கள் இருக்கும்.", "coursesPlaceholder": "படிப்பு மேலாண்மை", "coursesPlaceholderText": "இந்த பிரிவில் படிப்பு மேலாண்மை அம்சங்கள் இருக்கும்.", "analyticsPlaceholder": "பகுப்பாய்வு டாஷ்போர்டு", "analyticsPlaceholderText": "இந்த பிரிவில் விரிவான பகுப்பாய்வு மற்றும் நுண்ணறிவு இருக்கும்.", "skillsPlaceholder": "திறன் மேலாண்மை", "skillsPlaceholderText": "இந்த பிரிவில் திறன் கண்காணிப்பு மற்றும் மேலாண்மை இருக்கும்.", "reportsPlaceholder": "அறிக்கைகள் மற்றும் நுண்ணறிவு", "reportsPlaceholderText": "இந்த பிரிவில் விரிவான அறிக்கைகள் மற்றும் நுண்ணறிவு இருக்கும்.", "settingsPlaceholder": "கணினி அமைப்புகள்", "settingsPlaceholderText": "இந்த பிரிவில் கணினி கட்டமைப்பு மற்றும் அமைப்புகள் இருக்கும்."}'>தமிழ்</button></li>
+                            <li><button class="lang-option" data-lang="bn" data-text='{"pageTitle": "ড্যাশবোর্ড ওভারভিউ", "navDashboard": "ড্যাশবোর্ড", "navLearners": "শিক্ষার্থী", "navCourses": "কোর্স", "navAnalytics": "বিশ্লেষণ", "navSkills": "দক্ষতা", "navReports": "রিপোর্ট", "navSettings": "সেটিংস", "adminName": "অ্যাডমিন ইউজার", "adminRole": "সিস্টেম অ্যাডমিনিস্ট্রেটর", "logoutText": "লগআউট", "breadcrumbHome": "হোম", "breadcrumbCurrent": "ড্যাশবোর্ড", "totalLearnersLabel": "মোট শিক্ষার্থী", "totalCoursesLabel": "সক্রিয় কোর্স", "completionRateLabel": "সম্পূর্ণতার হার", "avgRatingLabel": "গড় রেটিং", "learnerGrowthTitle": "শিক্ষার্থী বৃদ্ধি", "skillDemandTitle": "চাহিদায় শীর্ষ দক্ষতা", "courseCompletionTitle": "কোর্স সম্পূর্ণতা", "recentActivityTitle": "সাম্প্রতিক কার্যকলাপ", "refreshText": "রিফ্রেশ", "userColumn": "ব্যবহারকারী", "actionColumn": "কর্ম", "courseColumn": "কোর্স", "timeColumn": "সময়", "statusColumn": "অবস্থা", "learnersPlaceholder": "শিক্ষার্থী ব্যবস্থাপনা", "learnersPlaceholderText": "এই বিভাগে শিক্ষার্থী ব্যবস্থাপনা বৈশিষ্ট্য থাকবে।", "coursesPlaceholder": "কোর্স ব্যবস্থাপনা", "coursesPlaceholderText": "এই বিভাগে কোর্স ব্যবস্থাপনা বৈশিষ্ট্য থাকবে।", "analyticsPlaceholder": "বিশ্লেষণ ড্যাশবোর্ড", "analyticsPlaceholderText": "এই বিভাগে বিস্তারিত বিশ্লেষণ এবং অন্তর্দৃষ্টি থাকবে।", "skillsPlaceholder": "দক্ষতা ব্যবস্থাপনা", "skillsPlaceholderText": "এই বিভাগে দক্ষতা ট্র্যাকিং এবং ব্যবস্থাপনা থাকবে।", "reportsPlaceholder": "রিপোর্ট এবং অন্তর্দৃষ্টি", "reportsPlaceholderText": "এই বিভাগে বিস্তৃত রিপোর্ট এবং অন্তর্দৃষ্টি থাকবে।", "settingsPlaceholder": "সিস্টেম সেটিংস", "settingsPlaceholderText": "এই বিভাগে সিস্টেম কনফিগারেশন এবং সেটিংস থাকবে।"}'>বাংলা</button></li>
+                            <li><button class="lang-option" data-lang="gu" data-text='{"pageTitle": "ડેશબોર્ડ ઓવરવ્યુ", "navDashboard": "ડેશબોર્ડ", "navLearners": "શીખનારાઓ", "navCourses": "કોર્સ", "navAnalytics": "વિશ્લેષણ", "navSkills": "કૌશલ્યો", "navReports": "રિપોર્ટ્સ", "navSettings": "સેટિંગ્સ", "adminName": "એડમિન યુઝર", "adminRole": "સિસ્ટમ એડમિનિસ્ટ્રેટર", "logoutText": "લોગઆઉટ", "breadcrumbHome": "હોમ", "breadcrumbCurrent": "ડેશબોર્ડ", "totalLearnersLabel": "કુલ શીખનારાઓ", "totalCoursesLabel": "સક્રિય કોર્સ", "completionRateLabel": "પૂર્ણતા દર", "avgRatingLabel": "સરેરાશ રેટિંગ", "learnerGrowthTitle": "શીખનાર વૃદ્ધિ", "skillDemandTitle": "માંગમાં ટોપ કૌશલ્યો", "courseCompletionTitle": "કોર્સ પૂર્ણતા", "recentActivityTitle": "તાજેતરની પ્રવૃત્તિ", "refreshText": "રિફ્રેશ", "userColumn": "વપરાશકર્તા", "actionColumn": "ક્રિયા", "courseColumn": "કોર્સ", "timeColumn": "સમય", "statusColumn": "સ્થિતિ", "learnersPlaceholder": "શીખનાર મેનેજમેન્ટ", "learnersPlaceholderText": "આ વિભાગમાં શીખનાર મેનેજમેન્ટ ફીચર્સ હશે.", "coursesPlaceholder": "કોર્સ મેનેજમેન્ટ", "coursesPlaceholderText": "આ વિભાગમાં કોર્સ મેનેજમેન્ટ ફીચર્સ હશે.", "analyticsPlaceholder": "વિશ્લેષણ ડેશબોર્ડ", "analyticsPlaceholderText": "આ વિભાગમાં વિગતવાર વિશ્લેષણ અને અંતર્દૃષ્ટિ હશે.", "skillsPlaceholder": "કૌશલ્ય મેનેજમેન્ટ", "skillsPlaceholderText": "આ વિભાગમાં કૌશલ્ય ટ્રેકિંગ અને મેનેજમેન્ટ હશે.", "reportsPlaceholder": "રિપોર્ટ્સ અને અંતર્દૃષ્ટિ", "reportsPlaceholderText": "આ વિભાગમાં વ્યાપક રિપોર્ટ્સ અને અંતર્દૃષ્ટિ હશે.", "settingsPlaceholder": "સિસ્ટમ સેટિંગ્સ", "settingsPlaceholderText": "આ વિભાગમાં સિસ્ટમ કોન્ફિગરેશન અને સેટિંગ્સ હશે."}'>ગુજરાતી</button></li>
+                        </ul>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="notifications">
+                        <button class="notification-btn" id="notificationBtn" aria-label="Notifications">
+                            <span class="notification-icon">🔔</span>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="user-menu">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            <div class="user-avatar">
+                                <span class="avatar-text">A</span>
+                            </div>
+                            <span class="user-name" id="headerUserName">Admin</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="admin-content">
+                <!-- Dashboard Section -->
+                <section class="content-section active" id="dashboardSection">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <span class="icon">👥</span>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalLearners">2,847</div>
+                                <div class="stat-label" id="totalLearnersLabel">Total Learners</div>
+                                <div class="stat-change positive">+12.5%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <span class="icon">📚</span>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalCourses">156</div>
+                                <div class="stat-label" id="totalCoursesLabel">Active Courses</div>
+                                <div class="stat-change positive">+8.2%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <span class="icon">🎯</span>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="completionRate">87%</div>
+                                <div class="stat-label" id="completionRateLabel">Completion Rate</div>
+                                <div class="stat-change positive">+5.3%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <span class="icon">⭐</span>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="avgRating">4.8</div>
+                                <div class="stat-label" id="avgRatingLabel">Avg Rating</div>
+                                <div class="stat-change positive">+0.2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="charts-grid">
+                        <!-- Learner Growth Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title" id="learnerGrowthTitle">Learner Growth</h3>
+                                <div class="chart-controls">
+                                    <button class="chart-btn active" data-period="month">Month</button>
+                                    <button class="chart-btn" data-period="quarter">Quarter</button>
+                                    <button class="chart-btn" data-period="year">Year</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="learnerGrowthChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Skill Demand Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title" id="skillDemandTitle">Top Skills in Demand</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="skillDemandChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Course Completion Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title" id="courseCompletionTitle">Course Completion</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="courseCompletionChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Table -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title" id="recentActivityTitle">Recent Activity</h3>
+                            <button class="table-action-btn" id="refreshTableBtn">
+                                <span class="btn-icon">🔄</span>
+                                <span class="btn-text" id="refreshText">Refresh</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="recentActivityTable">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-column="user">
+                                            <span class="th-content">
+                                                <span class="th-text" id="userColumn">User</span>
+                                                <span class="sort-icon">↕️</span>
+                                            </span>
+                                        </th>
+                                        <th class="sortable" data-column="action">
+                                            <span class="th-content">
+                                                <span class="th-text" id="actionColumn">Action</span>
+                                                <span class="sort-icon">↕️</span>
+                                            </span>
+                                        </th>
+                                        <th class="sortable" data-column="course">
+                                            <span class="th-content">
+                                                <span class="th-text" id="courseColumn">Course</span>
+                                                <span class="sort-icon">↕️</span>
+                                            </span>
+                                        </th>
+                                        <th class="sortable" data-column="time">
+                                            <span class="th-content">
+                                                <span class="th-text" id="timeColumn">Time</span>
+                                                <span class="sort-icon">↕️</span>
+                                            </span>
+                                        </th>
+                                        <th class="sortable" data-column="status">
+                                            <span class="th-content">
+                                                <span class="th-text" id="statusColumn">Status</span>
+                                                <span class="sort-icon">↕️</span>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activityTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Other sections will be added here -->
+                <section class="content-section" id="learnersSection">
+                    <div class="section-placeholder">
+                        <h2 id="learnersPlaceholder">Learners Management</h2>
+                        <p id="learnersPlaceholderText">This section will contain learner management features.</p>
+                    </div>
+                </section>
+
+                <section class="content-section" id="coursesSection">
+                    <div class="section-placeholder">
+                        <h2 id="coursesPlaceholder">Courses Management</h2>
+                        <p id="coursesPlaceholderText">This section will contain course management features.</p>
+                    </div>
+                </section>
+
+                <section class="content-section" id="analyticsSection">
+                    <div class="section-placeholder">
+                        <h2 id="analyticsPlaceholder">Analytics Dashboard</h2>
+                        <p id="analyticsPlaceholderText">This section will contain detailed analytics and insights.</p>
+                    </div>
+                </section>
+
+                <section class="content-section" id="skillsSection">
+                    <div class="section-placeholder">
+                        <h2 id="skillsPlaceholder">Skills Management</h2>
+                        <p id="skillsPlaceholderText">This section will contain skills tracking and management.</p>
+                    </div>
+                </section>
+
+                <section class="content-section" id="reportsSection">
+                    <div class="section-placeholder">
+                        <h2 id="reportsPlaceholder">Reports & Insights</h2>
+                        <p id="reportsPlaceholderText">This section will contain comprehensive reports and insights.</p>
+                    </div>
+                </section>
+
+                <section class="content-section" id="settingsSection">
+                    <div class="section-placeholder">
+                        <h2 id="settingsPlaceholder">System Settings</h2>
+                        <p id="settingsPlaceholderText">This section will contain system configuration and settings.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="{% static 'admin-panel-script.js' %}"></script>
+</body>
+</html>

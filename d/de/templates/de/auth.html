@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator - Login & Signup</title>
+    <meta name="description" content="Login or create an account for Career Navigator AI Assistant">
+    <link rel="stylesheet" href="{% static 'auth-styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="particles"></div>
+        <div class="waves"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <main class="main-content">
+        <header class="header">
+            <nav class="nav" role="navigation" aria-label="Main navigation">
+                <div class="nav-brand">
+                    <a href="{% url 'home' %}" class="logo-link">
+                        <h1 class="logo" id="navBrand"></h1>
+                    </a>
+                </div>
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
+                        <span class="language-icon">🌐</span>
+                        <span class="current-lang" data-lang="en">English</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="language-dropdown" id="languageDropdown" role="menu">
+                        <li role="menuitem"><button class="lang-option" data-lang="en">English</button></li>
+                        <li role="menuitem"><button class="lang-option" data-lang="hi">हिन्दी</button></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <section class="auth-container">
+            <div class="auth-card" id="authCard">
+                <div class="form-container login-form" id="loginForm">
+                    <div class="form-header">
+                        <h2 class="form-title" id="loginTitle"></h2>
+                        <p class="form-subtitle" id="loginSubtitle"></p>
+                    </div>
+                    <form class="auth-form" id="loginFormElement" method="POST" action="{% url 'auth' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="hidden" name="action" value="login">  
+                            <label for="loginEmail" class="input-label" id="emailLabel"></label>
+                            <input type="email" id="loginEmail" name="email" class="form-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="loginPassword" class="input-label" id="passwordLabel"></label>
+                            <input type="password" id="loginPassword" name="password" class="form-input" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="rememberMe" name="remember_me">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text" id="rememberMeText"></span>
+                            </label>
+                            <a href="#" class="forgot-link" id="forgotPassword"></a>
+                        </div>
+                        <button type="submit" name="login" class="auth-btn primary-btn ripple" id="loginBtn">
+                            <span class="btn-text" id="loginBtnText"></span>
+                        </button>
+                    </form>
+                    <div class="form-footer">
+                        <p class="switch-text" id="switchToSignupText"></p>
+                    </div>
+                </div>
+
+                <div class="form-container signup-form" id="signupForm">
+                    <div class="form-header">
+                        <h2 class="form-title" id="signupTitle"></h2>
+                        <p class="form-subtitle" id="signupSubtitle"></p>
+                    </div>
+                    <form class="auth-form" id="signupFormElement" method="POST" action="{% url 'auth' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="signup">
+                        <div class="input-group">
+                            <label for="signupName" class="input-label" id="fullNameLabel"></label>
+                            <input type="text" id="signupName" name="name" class="form-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signupEmail" class="input-label" id="signupEmailLabel"></label>
+                            <input type="email" id="signupEmail" name="email" class="form-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signupPassword" class="input-label" id="signupPasswordLabel"></label>
+                            <input type="password" id="signupPassword" name="password" class="form-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="confirmPassword" class="input-label" id="confirmPasswordLabel"></label>
+                            <input type="password" id="confirmPassword" name="confirm_password" class="form-input" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="userRole" class="input-label" id="roleLabel"></label>
+                            <select id="userRole" name="role" class="form-select" required>
+                                <option value="">Choose your role</option>
+                                <option value="learner" id="learnerOption"></option>
+                                <option value="admin" id="adminOption"></option>
+                            </select>
+                        </div>
+                        <button type="submit" name="signup" class="auth-btn primary-btn ripple" id="signupBtn">
+                            <span class="btn-text" id="signupBtnText"></span>
+                        </button>
+                    </form>
+                    <div class="form-footer">
+                        <p class="switch-text" id="switchToLoginText"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+        </div>
+        <p class="loading-text" id="loadingText">Loading...</p>
+    </div>
+    <div class="success-transition" id="successTransition">
+        <div class="success-content">
+            <div class="success-icon">✓</div>
+            <h3 class="success-title" id="successTitle">Success!</h3>
+            <p class="success-message" id="successMessage">Redirecting...</p>
+        </div>
+    </div>
+
+    {{ language_data|json_script:"language-data" }}
+    <script src="{% static 'auth-script.js' %}" defer></script>
+</body>
+</html>

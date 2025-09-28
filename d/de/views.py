@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password
-from .models import User
+from django.views.decorators.csrf import csrf_exempt
+from .models import User, LearnerProfile
 from .forms import SignupForm, LoginForm
+import os, json, difflib
 
 language_data = {
-        'en': {"pageTitle": "Career Navigator - Login & Signup", "navBrand": "CareerNav", "loginTitle": "Welcome Back", "signupTitle": "Create Account", "loginSubtitle": "Sign in to your account to continue", "signupSubtitle": "Join us and start your career journey", "email": "Email Address", "password": "Password", "confirmPassword": "Confirm Password", "fullName": "Full Name", "role": "Select Role", "learner": "Learner", "admin": "Admin", "loginBtn": "Login", "signupBtn": "Sign Up", "switchToSignup": "Don't have an account? Sign up", "switchToLogin": "Already have an account? Login", "forgotPassword": "Forgot Password?", "rememberMe": "Remember Me"},
+        'en': {"pageTitle": "Career Navigator - Login & Signup", "navBrand": "DreamEngine", "loginTitle": "Welcome Back", "signupTitle": "Create Account", "loginSubtitle": "Sign in to your account to continue", "signupSubtitle": "Join us and start your career journey", "email": "Email Address", "password": "Password", "confirmPassword": "Confirm Password", "fullName": "Full Name", "role": "Select Role", "learner": "Learner", "admin": "Admin", "loginBtn": "Login", "signupBtn": "Sign Up", "switchToSignup": "Don't have an account? Sign up", "switchToLogin": "Already have an account? Login", "forgotPassword": "Forgot Password?", "rememberMe": "Remember Me"},
         'hi': {"pageTitle": "करियर नेविगेटर - लॉगिन और साइनअप", "navBrand": "करियरनव", "loginTitle": "वापस स्वागत है", "signupTitle": "खाता बनाएं", "loginSubtitle": "जारी रखने के लिए अपने खाते में साइन इन करें", "signupSubtitle": "हमसे जुड़ें और अपनी करियर यात्रा शुरू करें", "email": "ईमेल पता", "password": "पासवर्ड", "confirmPassword": "पासवर्ड की पुष्टि करें", "fullName": "पूरा नाम", "role": "भूमिका चुनें", "learner": "सीखने वाला", "admin": "प्रशासक", "loginBtn": "लॉगिन", "signupBtn": "साइन अप", "switchToSignup": "खाता नहीं है? साइन अप करें", "switchToLogin": "पहले से खाता है? लॉगिन करें", "forgotPassword": "पासवर्ड भूल गए?", "rememberMe": "मुझे याद रखें"},
-        'ta': {
+        'ta': 
+        {
         "pageTitle": "தொழில் வழிகாட்டி - உள்நுழைவு மற்றும் பதிவு", "navBrand": "தொழில்வழி", 
         "loginTitle": "மீண்டும் வரவேற்கிறோம்", "signupTitle": "கணக்கை உருவாக்கவும்", 
         "loginSubtitle": "தொடர்ந்து உங்கள் கணக்கில் உள்நுழையவும்", "signupSubtitle": "எங்களுடன் சேர்ந்து உங்கள் தொழில் பயணத்தைத் தொடங்கவும்", 
@@ -17,7 +20,7 @@ language_data = {
         "switchToLogin": "ஏற்கனவே கணக்கு உள்ளதா? உள்நுழையவும்", "forgotPassword": "கடவுச்சொல் மறந்துவிட்டதா?", 
         "rememberMe": "என்னை நினைவில் வைத்திருங்கள்"
     },
-    
+ 
     'bn': {
         "pageTitle": "ক্যারিয়ার নেভিগেটর - লগইন এবং সাইন আপ", "navBrand": "ক্যারিয়ারনেভ", 
         "loginTitle": "ফিরে স্বাগতম", "signupTitle": "অ্যাকাউন্ট তৈরি করুন", 
@@ -39,13 +42,14 @@ language_data = {
         "rememberMe": "મને યાદ રાખો"
     }    
     }
-
 def login_user(request, user):
     request.session['user_id'] = user.id
     request.session['user_name'] = user.name
     request.session['user_role'] = user.role
 
+
 def auth(request):
+    """ Handles login and signup (AJAX-based). """
     if request.method == "POST":
         action = request.POST.get("action")
 
@@ -65,8 +69,6 @@ def auth(request):
                     if check_password(form.cleaned_data['password'], user.password):
                         login_user(request, user)
                         return JsonResponse({'status': 'success', 'message': 'Login successful', 'role': user.role})
-                
-    
                     return JsonResponse({'status': 'error', 'message': 'Invalid password'}, status=400)
                 except User.DoesNotExist:
                     return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
@@ -80,46 +82,162 @@ def auth(request):
         'language_data': language_data,
     })
 
+
+
 def home(request):
     return render(request, 'de/home.html')
 
 def learner_dashboard(request):
-    if 'user_id' not in request.session or request.session.get('user_role') != 'learner':
+    if request.session.get('user_role') != 'learner':
         return redirect('auth')
+
+    user_name = request.session.get('user_name', '')
+    profile_data = {}
+
+    try:
+        profile = LearnerProfile.objects.get(user__id=request.session['user_id'])
+        profile_data = {
+            "full_name": profile.user.name,
+            "first_name": profile.user.name.split(" ")[0] if profile.user.name else "",
+            "last_name": profile.user.name.split(" ")[1] if len(profile.user.name.split(" ")) > 1 else "",
+            "email": profile.user.email,
+            "phone": profile.phone or "",
+            "location": profile.location or "",
+            "education": profile.education or "",
+            "skills": profile.skills or [],
+            "experience": profile.experience or "",
+        }
+    except LearnerProfile.DoesNotExist:
+       
+        profile_data = {
+            "full_name": user_name,
+            "first_name": user_name.split(" ")[0] if user_name else "",
+            "last_name": user_name.split(" ")[1] if len(user_name.split(" ")) > 1 else "",
+            "email": "",
+            "phone": "",
+            "location": "",
+            "education": "",
+            "skills": [],
+            "experience": "",
+        }
+
     return render(request, 'de/learner-dashboard.html', {
-        'user_name': request.session.get('user_name')
+        'user_name': user_name,
+        'profile': profile_data
     })
 
 def profile_builder(request):
-    if 'user_id' not in request.session or request.session.get('user_role') != 'learner':
+    if request.session.get('user_role') != 'learner':
         return redirect('auth')
-    return render(request, 'de/profile-builder.html', {
-        'user_name': request.session.get('user_name')
-    })
+    return render(request, 'de/profile-builder.html', {'user_name': request.session.get('user_name')})
+
 
 def career_explorer(request):
-    if 'user_id' not in request.session or request.session.get('user_role') != 'learner':
+    if request.session.get('user_role') != 'learner':
         return redirect('auth')
-    return render(request, 'de/career-explorer.html', {
-        'user_name': request.session.get('user_name')
-    })
+    return render(request, 'de/career-explorer.html', {'user_name': request.session.get('user_name')})
+
 
 def recommendation_viewer(request):
-    if 'user_id' not in request.session or request.session.get('user_role') != 'learner':
+    if request.session.get('user_role') != 'learner':
         return redirect('auth')
-    return render(request, 'de/recommendation-viewer.html', {
-        'user_name': request.session.get('user_name')
-    })
+    return render(request, 'de/recommendation-viewer.html', {'user_name': request.session.get('user_name')})
 
 
 def admin_dashboard(request):
-    # Only allow admin users
-    if 'user_id' not in request.session or request.session.get('user_role') != 'admin':
+    if request.session.get('user_role') != 'admin':
         return redirect('auth')
-    
-    return render(request, 'de/admin-panel.html', {
-        'user_name': request.session.get('user_name')
-    })
+    return render(request, 'de/admin-panel.html', {'user_name': request.session.get('user_name')})
+
 
 def forgot_password(request):
     return render(request, 'de/forgot_password.html')
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'de', 'data')
+
+def chatbot_response(request):
+    user_message = request.GET.get("message", "").lower().strip()
+    lang = request.GET.get("lang", "en")
+
+    dataset_map = {
+        "en": "english_dataset.jsonl",
+        "hi": "hindi_dataset.jsonl",
+        "gu": "gujarati_dataset.jsonl",
+        "ta": "tamil_dataset.jsonl",
+        "bn": "bengali_dataset.jsonl"
+    }
+    dataset_file = dataset_map.get(lang, "english_dataset.jsonl")
+    file_path = os.path.join(DATA_DIR, dataset_file)
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = [json.loads(line.strip()) for line in f if line.strip()]
+
+        response = "⚠️ Sorry, I don’t have an answer for that yet."
+
+       
+        for entry in data:
+            if user_message == entry["user"].lower().strip():
+                response = entry["assistant"]
+                break
+        if response.startswith("⚠️"):
+            best_match = max(data, key=lambda e: difflib.SequenceMatcher(None, user_message, e["user"].lower()).ratio(), default=None)
+            if best_match and difflib.SequenceMatcher(None, user_message, best_match["user"].lower()).ratio() > 0.5:
+                response = best_match["assistant"]
+
+        return JsonResponse({"response": response})
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+@csrf_exempt
+def save_profile(request):
+    if request.method == "POST":
+        if 'user_id' not in request.session:
+            return JsonResponse({'status': 'error', 'message': 'Not logged in'}, status=401)
+            
+
+        user = User.objects.get(id=request.session['user_id'])
+        data = json.loads(request.body)
+
+        LearnerProfile.objects.update_or_create(
+            user=user,
+            defaults={
+                "phone": data.get("phone"),
+                "location": data.get("location"),
+                "education": data.get("education"),
+                "skills": data.get("skills", []),
+                "experience": data.get("experience"),
+                "preferences": data.get("preferences"),
+            }
+        )
+        return JsonResponse({"status": "success", "message": "Profile saved"})
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=400)
+
+def load_profile(request):
+    if 'user_id' not in request.session:
+        return JsonResponse({'status': 'error', 'message': 'Not logged in'}, status=401)
+
+    try:
+        profile = LearnerProfile.objects.get(user__id=request.session['user_id'])
+        user_name = profile.user.name or ""
+        name_parts = user_name.split(" ", 1)
+        first_name = name_parts[0] if len(name_parts) > 0 else ""
+        last_name = name_parts[1] if len(name_parts) > 1 else ""
+
+        return JsonResponse({
+            "firstName": first_name,
+            "lastName": last_name,
+            "email": profile.user.email,
+            "phone": profile.phone or "",
+            "location": profile.location or "",
+            "educ/ation": profile.education or "",
+            "skills": profile.skills or [],
+            "experience": profile.experience or "",
+            "preferences": profile.preferences or "",
+        })
+    except LearnerProfile.DoesNotExist:
+        return JsonResponse({"status": "empty", "message": "Profile not created yet"})
+
+
+

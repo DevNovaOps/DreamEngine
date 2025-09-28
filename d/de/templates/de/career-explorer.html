@@ -12,16 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="background-container">
         <div class="gradient-bg"></div>
         <div class="particles"></div>
         <div class="floating-shapes"></div>
     </div>
-
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Top Navigation -->
         <nav class="top-nav" role="navigation" aria-label="Main navigation">
             <div class="nav-container">
                 <div class="nav-brand">
@@ -29,8 +25,6 @@
                         <h1 class="logo" id="navBrand">CareerNav</h1>
                     </a>
                 </div>
-                
-                <!-- Action Buttons -->
                 <div class="header-actions">
                     <button class="back-btn" id="backBtn" aria-label="Go back">
                         <span class="back-icon">←</span>
@@ -41,8 +35,6 @@
                         <span class="logout-text" id="logoutText">Logout</span>
                     </button>
                 </div>
-                
-                <!-- Language Selector -->
                 <div class="language-selector">
                     <button class="language-btn" id="languageBtn" aria-label="Select language" aria-expanded="false">
                         <span class="language-icon">🌐</span>
@@ -69,18 +61,12 @@
                 </div>
             </div>
         </nav>
-
-        <!-- Career Explorer Content -->
         <div class="explorer-container">
-            <!-- Header -->
             <div class="explorer-header">
                 <h2 class="explorer-title" id="careerExplorerTitle">Career Explorer</h2>
                 <p class="explorer-subtitle" id="exploreCareersSubtitle">Explore Careers</p>
             </div>
-
-            <!-- Search and Filter Section -->
             <div class="search-filter-section">
-                <!-- Search Bar -->
                 <div class="search-container">
                     <div class="search-bar">
                         <input type="text" id="searchInput" class="search-input" placeholder="Search courses and jobs...">
@@ -90,8 +76,6 @@
                         <div class="search-glow"></div>
                     </div>
                 </div>
-
-                <!-- Filter Options -->
                 <div class="filter-container">
                     <h3 class="filter-title" id="filterByTitle">Filter by</h3>
                     <div class="filter-options">
@@ -188,22 +172,16 @@
                     <div class="results-count" id="resultsCount">12 results</div>
                 </div>
 
-                <!-- Loading Indicator -->
                 <div class="loading-indicator" id="loadingIndicator">
                     <div class="loading-spinner"></div>
                     <span class="loading-text" id="loadingText">Loading...</span>
                 </div>
-
-                <!-- No Results -->
                 <div class="no-results" id="noResults" style="display: none;">
                     <div class="no-results-icon">🔍</div>
                     <h3 class="no-results-title" id="noResultsTitle">No results found</h3>
                     <p class="no-results-message" id="noResultsMessage">Try a different search term</p>
                 </div>
-
-                <!-- Cards Grid -->
                 <div class="cards-grid" id="cardsGrid">
-                    <!-- Cards will be populated by JavaScript -->
                 </div>
             </div>
         </div>

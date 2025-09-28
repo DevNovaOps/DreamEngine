@@ -12,16 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="background-container">
         <div class="gradient-bg"></div>
         <div class="particles"></div>
         <div class="floating-shapes"></div>
     </div>
-
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Top Navigation -->
         <nav class="top-nav" role="navigation" aria-label="Main navigation">
             <div class="nav-container">
                 <div class="nav-brand">
@@ -30,7 +26,6 @@
                     </a>
                 </div>
                 
-                <!-- Action Buttons -->
                 <div class="header-actions">
                     <button class="back-btn" id="backBtn" aria-label="Go back">
                         <span class="back-icon">←</span>
@@ -172,8 +167,6 @@
                             </form>
                         </div>
                     </div>
-
-                    <!-- Step 3: Experience -->
                     <div class="step" id="step3">
                         <div class="step-card">
                             <h3 class="step-title" id="step3Title">Experience</h3>
@@ -239,7 +232,11 @@
             </button>
         </div>
     </div>
-
+    <script>
+    const SAVE_PROFILE_URL = "{% url 'save_profile' %}";
+    const LOAD_PROFILE_URL = "{% url 'load_profile' %}";
+    const CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
     <script src="{% static 'profile-builder-script.js' %}"></script>
 </body>
 </html>

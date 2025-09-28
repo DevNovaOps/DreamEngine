@@ -31,6 +31,7 @@ class ProfileBuilder {
         this.setupHeaderActions();
         this.loadLanguageData();
         this.updateProgress();
+        this.loadProfile();
     }
 
     // Language Management
@@ -561,15 +562,28 @@ class ProfileBuilder {
         }, 2000);
     }
 
-    autoSave() {
-        this.showAutoSaveIndicator();
-        
-        // Simulate auto-save
-        setTimeout(() => {
-            this.hideAutoSaveIndicator();
-            console.log('Profile auto-saved:', this.formData);
-        }, 1500);
-    }
+autoSave() {
+    this.showAutoSaveIndicator();
+
+    fetch(SAVE_PROFILE_URL, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+        },
+        body: JSON.stringify(this.formData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        this.hideAutoSaveIndicator();
+        console.log('Profile auto-saved:', this.formData);
+    })
+    .catch(err => {
+        console.error('Auto-save error:', err);
+        this.hideAutoSaveIndicator();
+    });
+}
+
 
     showAutoSaveIndicator() {
         const indicator = document.getElementById('autoSaveIndicator');
@@ -581,21 +595,87 @@ class ProfileBuilder {
         indicator.classList.remove('show');
     }
 
-    // Save Profile
-    saveProfile() {
-        if (this.validateCurrentStep()) {
-            this.saveCurrentStepData();
-            this.showSuccessModal();
-        }
-    }
+    // Save profile to backend
+async saveProfile() {
+    try {
+        const response = await fetch(SAVE_PROFILE_URL, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': CSRF_TOKEN
+            },
+            body: JSON.stringify(this.formData)
+        });
+        const data = await response.json();
 
-    showSuccessModal() {
+        if (data.status === "success") {
+            this.showSuccessModal();
+        } else {
+            this.showErrorModal(data.message || 'Error saving profile');
+        }
+    } catch (error) {
+        console.error('Save profile error:', error);
+        this.showErrorModal('Unable to save profile. Try again.');
+    }
+}
+async loadProfile() {
+    try {
+        const response = await fetch('/api/load-profile/', {
+            method: 'GET',
+            headers: { 'X-CSRFToken': CSRF_TOKEN },
+        });
+
+        const data = await response.json();
+        console.log('Loaded profile data:', data);
+
+        if (data.status === "empty") {
+            console.log('No profile found yet, starting fresh.');
+            return; // nothing to populate
+        }
+
+        // Normalize skills to array
+        if (!Array.isArray(data.skills)) {
+            try {
+                data.skills = JSON.parse(data.skills) || [];
+            } catch (e) {
+                data.skills = [];
+            }
+        }
+
+        // Populate formData with loaded profile
+        this.formData = {
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            email: data.email || '',
+            phone: data.phone || '',
+            location: data.location || '',
+            education: data.education || '',
+            skills: data.skills || [],
+            experience: data.experience || '',
+            preferences: data.preferences || ''
+        };
+
+        // Set to first step
+        this.currentStep = 1;
+
+        // Update all steps on UI
+        this.updateStepDisplay();       // Populate input fields with loaded data
+        this.updateSkillsDisplay();     // Populate skills tags/checkboxes if you have a separate method
+        this.updateNavigationButtons(); // Enable/disable next/back buttons
+
+        console.log('Profile successfully loaded.');
+    } catch (error) {
+        console.error('Error loading profile:', error);
+    }
+}
+
+  showSuccessModal() {
         const modal = document.getElementById('successModal');
         modal.classList.add('show');
         
         const continueBtn = document.getElementById('continueBtn');
         continueBtn.addEventListener('click', () => {
-            window.location.href = 'learner-dashboard.html';
+             window.location.href = "/de/learner-dashboard/";
         });
     }
 

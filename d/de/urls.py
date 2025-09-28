@@ -10,4 +10,7 @@ urlpatterns = [
     path('recommendation-viewer/', views.recommendation_viewer, name='recommendation_viewer'),
     path('career-explorer/', views.career_explorer, name='career_explorer'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path("chatbot-response/", views.chatbot_response, name="chatbot_response"),
+    path("api/save-profile/", views.save_profile, name="save_profile"),
+    path("api/load_profile/", views.load_profile, name="load_profile"),
 ]

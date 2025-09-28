@@ -5,8 +5,6 @@ class ChatbotAssistant {
         this.currentLanguage = 'en';
         this.messageHistory = [];
         this.isTyping = false;
-        
-        // Language data for chatbot
         this.languageData = {
             en: {
                 welcomeText: "Hello! I'm your AI Career Assistant. How can I help you today?",
@@ -67,7 +65,7 @@ class ChatbotAssistant {
         const sendBtn = document.getElementById('sendBtn');
         const input = document.getElementById('chatbotInput');
 
-
+        // Toggle chatbot window
         toggleBtn.addEventListener('click', () => {
             this.toggleChatbot();
         });
@@ -124,8 +122,6 @@ class ChatbotAssistant {
                 this.closeLanguageDropdown(langDropdown);
             });
         });
-
-        // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
                 this.closeLanguageDropdown(langDropdown);
@@ -188,17 +184,19 @@ class ChatbotAssistant {
 
         // Update current language display
         const currentLang = document.querySelector('#chatbotLangBtn .current-lang');
-        if (currentLang) {
-            const langCodes = {
-                'en': 'EN',
-                'hi': 'हि',
-                'ta': 'த',
-                'bn': 'ব',
-                'gu': 'ગુ'
-            };
-            currentLang.textContent = langCodes[lang];
-            currentLang.setAttribute('data-lang', lang);
-        }
+if (currentLang) {
+    const langCodes = {
+        'en': 'EN',
+        'hi': 'हि',
+        'ta': 'த',
+        'bn': 'ব',
+        'gu': 'ગુ'
+    };
+    const code = langCodes[this.currentLanguage] || 'EN';
+    currentLang.textContent = code;
+    currentLang.setAttribute('data-lang', this.currentLanguage);
+}
+
     }
 
     loadLanguageData() {
@@ -407,22 +405,24 @@ class ChatbotAssistant {
         }
         this.isTyping = false;
     }
-
-    generateBotResponse(userMessage) {
-        const responses = [
-            "That's an interesting question! Let me help you with that.",
-            "I understand what you're looking for. Here's what I can suggest...",
-            "Great question! Based on your interests, I recommend...",
-            "I'd be happy to help you explore that further. Let me provide some insights...",
-            "That's a common concern. Here are some strategies that might help...",
-            "Excellent point! Let me break this down for you...",
-            "I can definitely help you with that. Here's what I think...",
-            "That's a great area to focus on! Let me share some resources..."
-        ];
-        
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        this.addBotMessage(randomResponse);
-    }
+generateBotResponse(userMessage) {
+    fetch("/de/chatbot-response/?message=" + 
+          encodeURIComponent(userMessage) + 
+          "&lang=" + encodeURIComponent(this.currentLanguage))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            this.addBotMessage(data.response || "⚠️ No response found.");
+        })
+        .catch(err => {
+            this.addBotMessage("❌ Server error, please try again later.");
+            console.error("Chatbot error:", err);
+        });
+}
 
     createRippleEffect(e, element) {
         const ripple = document.createElement('span');

@@ -1,13 +1,21 @@
 import json
-from deep_translator import GoogleTranslator
-import time
 import os
+import torch
+from transformers import pipeline
+
+DEVICE = 0 if torch.cuda.is_available() else -1 
+print(f"Using device: {'GPU' if DEVICE == 0 else 'CPU'}")
+
+
+MODELS = {
+    'hi': 'Helsinki-NLP/opus-mt-en-hi',
+    'gu': 'Helsinki-NLP/opus-mt-en-gu',
+    'ta': 'Helsinki-NLP/opus-mt-en-ta',
+    'bn': 'Helsinki-NLP/opus-mt-en-bn'
+}
 
 SCRIPT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-
-
 INPUT_FILE = os.path.join(SCRIPT_DIRECTORY, 'english_dataset.jsonl')
-
 KEYS_TO_TRANSLATE = ['user', 'assistant'] 
 
 LANGUAGES_AND_FILENAMES = {
@@ -16,17 +24,26 @@ LANGUAGES_AND_FILENAMES = {
     'ta': os.path.join(SCRIPT_DIRECTORY, 'tamil_dataset.jsonl'),
     'bn': os.path.join(SCRIPT_DIRECTORY, 'bengali_dataset.jsonl')
 }
-# --------------------
 
-def run_translation():
+
+def local_translation():
     """
-    Reads a JSONL file with 'user' and 'assistant' keys, translates their content,
-    and creates separate translated files for each language.
+    Translates a dataset using local, offline models from Hugging Face.
     """
+    print("Loading translation models... This may take a while on the first run as models are downloaded.")
+    try:
+
+        translators = {
+            lang: pipeline("translation", model=model_name, device=DEVICE)
+            for lang, model_name in MODELS.items()
+        }
+        print("All models loaded successfully!")
+    except Exception as e:
+        print(f"Error loading models: {e}")
+        print("Please ensure you have a stable internet connection for the first run to download models.")
+        return
     print(f"Starting translation process for '{INPUT_FILE}'...")
-    
     output_files = {} 
-    success = True
     lines_read = 0
     lines_written = 0
     
@@ -38,45 +55,41 @@ def run_translation():
         output_files = {lang: open(fname, 'w', encoding='utf-8') for lang, fname in LANGUAGES_AND_FILENAMES.items()}
 
         with open(INPUT_FILE, 'r', encoding='utf-8') as infile:
-            for i, line in enumerate(infile):
+            for i, line in enumerate(infile, 1):
                 lines_read += 1
                 try:
                     data = json.loads(line)
                     
-                    # Process each target language
                     for lang_code, file_handler in output_files.items():
-                        translated_data = data.copy() 
+                        translated_data = data.copy()
+                        translator = translators[lang_code]
                         
                         for key in KEYS_TO_TRANSLATE:
-                            if key in data and data[key]: # Check if key exists and is not empty
+                            if key in data and data[key]:
                                 original_text = data[key]
-                                translated_text = GoogleTranslator(source='auto', target=lang_code).translate(original_text)
-                                translated_data[key] = translated_text
+                                translated_output = translator(original_text)
+                                translated_data[key] = translated_output[0]['translation_text']
                         
-                        # Write the fully translated object to the correct language file
                         file_handler.write(json.dumps(translated_data, ensure_ascii=False) + '\n')
                     
                     lines_written += 1
-                    print(f"Processed line {i+1}...")
-                    time.sleep(1) # Polite delay
+                    if lines_written % 10 == 0:
+                        print(f"Processed {lines_written} lines...")
 
                 except json.JSONDecodeError:
-                    print(f"Warning: Skipping malformed JSON on line {i+1}")
-                except Exception as e:
-                    print(f"An error occurred on line {i+1}: {e}")
+                    print(f"Warning: Skipping malformed JSON on line {i}")
 
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        success = False
+        print(f"An unexpected error occurred during file processing: {e}")
     finally:
         for handler in output_files.values():
             handler.close()
 
     print("\n--- SCRIPT FINISHED ---")
-    print(f"Total lines read from input file: {lines_read}")
-    print(f"Total lines successfully translated and written: {lines_written}")
-    if success and lines_written > 0:
-        print("\n✅ All translation files created successfully and contain data!")
+    print(f"Total lines read: {lines_read}")
+    print(f"Total lines written: {lines_written}")
+    if lines_written > 0:
+        print("\n✅ Translation complete!")
 
 if __name__ == "__main__":
-    run_translation()
+    local_translation()

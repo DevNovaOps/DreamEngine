@@ -29,84 +29,78 @@ class CareerNavigatorAuth {
     }
 
     setupLanguageSelector() {
-        const languageBtn = document.getElementById("languageBtn");
-        const languageDropdown = document.getElementById("languageDropdown");
-        const currentLang = document.querySelector(".current-lang");
-        const langOptions = document.querySelectorAll(".lang-option");
+    const languageBtn = document.getElementById("languageBtn");
+    const languageDropdown = document.getElementById("languageDropdown");
+    const currentLang = document.querySelector(".current-lang");
+    const langOptions = document.querySelectorAll(".lang-option");
 
-        if (!languageBtn || !languageDropdown || !currentLang) {
-            console.error("Language selector elements not found");
-            return;
+    if (!languageBtn || !languageDropdown || !currentLang) {
+        console.error("Language selector elements not found");
+        return;
+    }
+
+    // Prevent any default button behavior
+    languageBtn.type = "button";
+
+    // Toggle dropdown visibility
+    languageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        this.dropdownOpen = !this.dropdownOpen;
+        
+        if (this.dropdownOpen) {
+            languageDropdown.classList.add("show");
+            languageBtn.setAttribute("aria-expanded", "true");
+        } else {
+            languageDropdown.classList.remove("show");
+            languageBtn.setAttribute("aria-expanded", "false");
         }
+    });
 
-        // Prevent any default button behavior
-        languageBtn.type = "button";
-
-        // Toggle dropdown visibility
-        languageBtn.addEventListener("click", (e) => {
+    // Language select - use mousedown instead of click for better reliability
+    langOptions.forEach(option => {
+        // Set button type explicitly
+        option.type = "button";
+        
+        option.addEventListener("mousedown", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
-            console.log("Language button clicked");
-            this.dropdownOpen = !this.dropdownOpen;
-            
-            if (this.dropdownOpen) {
-                languageDropdown.classList.add("show");
-                languageBtn.setAttribute("aria-expanded", "true");
-                console.log("Dropdown opened");
-            } else {
-                languageDropdown.classList.remove("show");
-                languageBtn.setAttribute("aria-expanded", "false");
-                console.log("Dropdown closed");
-            }
+
+            this.currentLanguage = option.dataset.lang;
+            this.currentLanguageData = this.allLanguageData[this.currentLanguage];
+            currentLang.textContent = option.textContent;
+
+            // Close dropdown
+            this.dropdownOpen = false;
+            languageDropdown.classList.remove("show");
+            languageBtn.setAttribute("aria-expanded", "false");
+
+            // Update all text content
+            this.updateTextContent();
+
+            // Add visual feedback
+            this.showLanguageChangeNotification(option.textContent);
         });
+        
+        // Also add click handler for accessibility (keyboard users)
+        option.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    });
 
-        // Language select
-        langOptions.forEach(option => {
-            console.log("Setting up option:", option.dataset.lang);
-            
-            option.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                console.log("Language option clicked:", option.dataset.lang);
-                
-                this.currentLanguage = option.dataset.lang;
-                this.currentLanguageData = this.allLanguageData[this.currentLanguage];
-                currentLang.textContent = option.textContent;
-
-                // Close dropdown
+    // Close dropdown when clicking outside
+    document.addEventListener("mousedown", (e) => {
+        if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+            if (this.dropdownOpen) {
                 this.dropdownOpen = false;
                 languageDropdown.classList.remove("show");
                 languageBtn.setAttribute("aria-expanded", "false");
-
-                // Update all text content
-                this.updateTextContent();
-                
-                // Add visual feedback
-                this.showLanguageChangeNotification(option.textContent);
-            });
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
-                if (this.dropdownOpen) {
-                    this.dropdownOpen = false;
-                    languageDropdown.classList.remove("show");
-                    languageBtn.setAttribute("aria-expanded", "false");
-                }
             }
-        });
-
-        // Prevent dropdown clicks from closing it immediately
-        languageDropdown.addEventListener("click", (e) => {
-            // Only stop propagation if clicking on the dropdown itself, not the buttons
-            if (e.target === languageDropdown) {
-                e.stopPropagation();
-            }
-        });
-    }
+        }
+    });
+}
 
     showLanguageChangeNotification(languageName) {
         // Create a small notification to show language changed

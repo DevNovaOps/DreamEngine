@@ -226,10 +226,10 @@ body {
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(76, 175, 80, 0.5);
     border-radius: 8px;
-    color: white;
+    color: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px;
@@ -237,8 +237,8 @@ body {
 }
 
 .language-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(50, 50, 50, 0.9);
+    border-color: rgba(76, 175, 80, 0.8);
 }
 
 .language-icon {
@@ -259,10 +259,10 @@ body {
     top: calc(100% + 8px);
     right: 0;
     min-width: 150px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(76, 175, 80, 0.4);
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     list-style: none;
     padding: 8px 0;
     margin: 0;
@@ -291,19 +291,22 @@ body {
     border: none;
     text-align: left;
     cursor: pointer;
-    color: #333;
+    color: #fff;
     font-size: 14px;
     transition: background 0.2s ease;
     display: block;
 }
 
-.lang-option:hover {
-    background: rgba(76, 175, 80, 0.1);
+.lang-option:hover,
+.lang-option:focus {
+    background: rgba(76, 175, 80, 0.15);
+    outline: none;
 }
 
 .lang-option:active {
-    background: rgba(76, 175, 80, 0.2);
+    background: rgba(76, 175, 80, 0.25);
 }
+
 .auth-container {
     flex: 1;
     display: flex;

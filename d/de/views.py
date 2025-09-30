@@ -706,7 +706,6 @@ def load_profile(request):
 
 @csrf_exempt
 def set_language(request):
-    """Set user's preferred language"""
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -716,12 +715,9 @@ def set_language(request):
             supported_languages = ['en', 'hi', 'ta', 'bn', 'gu']
             if language not in supported_languages:
                 language = 'en'
-            
-            # Store in session
+        
             request.session['user_language'] = language
             activate(language)
-            
-            # If user is logged in, you could also store in database
             if 'user_id' in request.session:
                 try:
                     user = User.objects.get(id=request.session['user_id'])

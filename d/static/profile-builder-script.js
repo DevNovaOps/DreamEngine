@@ -33,6 +33,54 @@ class ProfileBuilder {
         this.updateProgress();
         this.loadProfile();
     }
+    changeLanguage(lang, textData) {
+    this.currentLanguage = lang;
+    this.currentLanguageData = textData;
+    
+    // Save language preference to backend
+    this.saveLanguagePreference(lang);
+    
+    // Update current language display
+    const currentLangElement = document.querySelector('.current-lang');
+    const langNames = {
+        'en': 'English',
+        'hi': 'हिन्दी',
+        'ta': 'தமிழ்',
+        'bn': 'বাংলা',
+        'gu': 'ગુજરાતી'
+    };
+    currentLangElement.textContent = langNames[lang];
+    currentLangElement.setAttribute('data-lang', lang);
+
+    // Update text content with smooth fade transition
+    this.updateTextContent(textData);
+    
+    // Update HTML lang attribute
+    document.documentElement.lang = this.currentLanguage;
+    
+    // Announce language change to screen reader
+    this.announceToScreenReader(`Language changed to ${langNames[lang]}`);
+}
+
+// Add this new method to save language preference
+saveLanguagePreference(lang) {
+    fetch('/api/set-language/', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+        },
+        body: JSON.stringify({ language: lang })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('Language preference saved:', lang);
+    })
+    .catch(err => {
+        console.error('Error saving language preference:', err);
+    });
+}
+
 
     // Language Management
     setupLanguageSelector() {
@@ -120,7 +168,6 @@ class ProfileBuilder {
 
     updateTextContent(textData) {
         const elements = {
-            pageTitle: document.title,
             navBrand: document.getElementById('navBrand'),
             languageBtn: document.getElementById('languageBtn'),
             profileBuilderTitle: document.getElementById('profileBuilderTitle'),
@@ -564,6 +611,12 @@ class ProfileBuilder {
 
 autoSave() {
     this.showAutoSaveIndicator();
+    
+   
+    const saveData = {
+        ...this.formData,
+        language: this.currentLanguage
+    };
 
     fetch(SAVE_PROFILE_URL, {
         method: 'POST',
@@ -571,19 +624,22 @@ autoSave() {
             'Content-Type': 'application/json',
             'X-CSRFToken': CSRF_TOKEN
         },
-        body: JSON.stringify(this.formData)
+        body: JSON.stringify(saveData)
     })
     .then(res => res.json())
     .then(data => {
         this.hideAutoSaveIndicator();
-        console.log('Profile auto-saved:', this.formData);
+        if (data.status === 'success') {
+            console.log('Profile auto-saved:', this.formData);
+        } else {
+            console.error('Auto-save failed:', data.message);
+        }
     })
     .catch(err => {
         console.error('Auto-save error:', err);
         this.hideAutoSaveIndicator();
     });
 }
-
 
     showAutoSaveIndicator() {
         const indicator = document.getElementById('autoSaveIndicator');
@@ -595,16 +651,20 @@ autoSave() {
         indicator.classList.remove('show');
     }
 
-    // Save profile to backend
-async saveProfile() {
+   async saveProfile() {
     try {
+        const saveData = {
+            ...this.formData,
+            language: this.currentLanguage
+        };
+        
         const response = await fetch(SAVE_PROFILE_URL, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-CSRFToken': CSRF_TOKEN
             },
-            body: JSON.stringify(this.formData)
+            body: JSON.stringify(saveData)
         });
         const data = await response.json();
 
@@ -615,12 +675,13 @@ async saveProfile() {
         }
     } catch (error) {
         console.error('Save profile error:', error);
-        this.showErrorModal('Unable to save profile. Try again.');
+        const errorMsg = this.currentLanguageData?.saveFailed || 'Unable to save profile. Try again.';
+        this.showErrorModal(errorMsg);
     }
 }
 async loadProfile() {
     try {
-        const response = await fetch('/api/load-profile/', {
+        const response = await fetch(LOAD_PROFILE_URL, {
             method: 'GET',
             headers: { 'X-CSRFToken': CSRF_TOKEN },
         });
@@ -630,15 +691,30 @@ async loadProfile() {
 
         if (data.status === "empty") {
             console.log('No profile found yet, starting fresh.');
-            return; // nothing to populate
+            // Set language if provided
+            if (data.language) {
+                this.setLanguageFromBackend(data.language);
+            }
+            return;
+        }
+
+        if (data.status === "error") {
+            console.error('Error loading profile:', data.message);
+            return;
+        }
+
+        // Set language preference if provided
+        if (data.language && data.language !== this.currentLanguage) {
+            this.setLanguageFromBackend(data.language);
         }
 
         // Normalize skills to array
-        if (!Array.isArray(data.skills)) {
+        let skills = data.skills || [];
+        if (!Array.isArray(skills)) {
             try {
-                data.skills = JSON.parse(data.skills) || [];
+                skills = JSON.parse(skills);
             } catch (e) {
-                data.skills = [];
+                skills = [];
             }
         }
 
@@ -650,7 +726,7 @@ async loadProfile() {
             phone: data.phone || '',
             location: data.location || '',
             education: data.education || '',
-            skills: data.skills || [],
+            skills: skills,
             experience: data.experience || '',
             preferences: data.preferences || ''
         };
@@ -659,14 +735,52 @@ async loadProfile() {
         this.currentStep = 1;
 
         // Update all steps on UI
-        this.updateStepDisplay();       // Populate input fields with loaded data
-        this.updateSkillsDisplay();     // Populate skills tags/checkboxes if you have a separate method
-        this.updateNavigationButtons(); // Enable/disable next/back buttons
+        this.updateStepDisplay();
+        this.updateSkillsDisplay();
+        this.updateNavigationButtons();
 
         console.log('Profile successfully loaded.');
     } catch (error) {
         console.error('Error loading profile:', error);
     }
+}
+setLanguageFromBackend(lang) {
+    // Find the language option element
+    const langOption = document.querySelector(`.lang-option[data-lang="${lang}"]`);
+    if (langOption) {
+        const textData = JSON.parse(langOption.dataset.text);
+        this.changeLanguage(lang, textData);
+    }
+}
+
+// Add error modal method
+showErrorModal(message) {
+    // Create modal if it doesn't exist
+    let modal = document.getElementById('errorModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'errorModal';
+        modal.className = 'success-modal'; // Reuse same styling
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="success-icon" style="background: #ff6b9d;">✗</div>
+                <h3 class="success-title" id="errorTitle">Error</h3>
+                <p class="success-message" id="errorMessage"></p>
+                <button class="continue-btn ripple" id="errorCloseBtn">
+                    <span>Close</span>
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        document.getElementById('errorCloseBtn').addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+    }
+    
+    // Update message and show
+    document.getElementById('errorMessage').textContent = message;
+    modal.classList.add('show');
 }
 
   showSuccessModal() {
@@ -734,8 +848,6 @@ async loadProfile() {
             </div>
         `;
     }
-
-    // Accessibility Features
     setupAccessibility() {
         // Skip to main content link
         this.createSkipLink();
@@ -904,25 +1016,24 @@ async loadProfile() {
         }
     }
 
-    handleLogout() {
-        // Show confirmation dialog
-        const confirmLogout = confirm('Are you sure you want to logout?');
-        if (confirmLogout) {
-            // Clear any stored user data
-            localStorage.removeItem('userToken');
-            localStorage.removeItem('userData');
-            sessionStorage.clear();
-            
-            // Show logout notification
-            this.showNotification('Logging out...', 'info');
-            
-            // Redirect to login page after a short delay
-            setTimeout(() => {
-                window.location.href = 'auth.html';
-            }, 1500);
-        }
+handleLogout() {
+    const confirmMsg = this.currentLanguageData?.logoutConfirm || 'Are you sure you want to logout?';
+    const confirmLogout = confirm(confirmMsg);
+    
+    if (confirmLogout) {
+        // Clear any stored user data
+        sessionStorage.clear();
+        
+        // Show logout notification
+        const logoutMsg = this.currentLanguageData?.loggingOut || 'Logging out...';
+        this.showNotification(logoutMsg, 'info');
+        
+        // Redirect to logout URL
+        setTimeout(() => {
+            window.location.href = '/logout/';
+        }, 1500);
     }
-
+}
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;

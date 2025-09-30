@@ -13,4 +13,6 @@ urlpatterns = [
     path("chatbot-response/", views.chatbot_response, name="chatbot_response"),
     path("api/save-profile/", views.save_profile, name="save_profile"),
     path("api/load_profile/", views.load_profile, name="load_profile"),
+    path('api/set-language/', views.set_language, name='set_language'),
+    path('change-language/', views.change_language, name='change_language'),
 ]

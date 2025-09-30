@@ -1,7 +1,8 @@
 class LearnerDashboard {
     constructor() {
-        this.currentLanguage = 'en';
-        this.currentLanguageData = null;
+        this.currentLanguage = document.documentElement.getAttribute('data-current-lang') || 'en';
+        this.allTranslations = this.loadTranslationsFromDOM();
+        this.currentLanguageData = this.allTranslations[this.currentLanguage];
         this.currentQuoteIndex = 0;
         this.quotes = [];
         
@@ -15,42 +16,135 @@ class LearnerDashboard {
         this.setupMotivationalQuotes();
         this.setupProfileCard();
         this.setupAccessibility();
-        this.loadLanguageData();
         this.startAnimations();
+        
+        // Apply initial language
+        this.applyLanguage(this.currentLanguage);
+    }
+loadTranslationsFromDOM() {
+        // Load translations from a script tag in the template
+        const translationsElement = document.getElementById('translations-data');
+        if (translationsElement && translationsElement.textContent.trim()) {
+            const content = translationsElement.textContent.trim();
+            
+            // Check if content is "undefined" string or empty
+            if (content === 'undefined' || content === '') {
+                console.log('Translation data is undefined, using fallback');
+                return this.getFallbackTranslations();
+            }
+            
+            try {
+                const parsed = JSON.parse(content);
+                console.log('Translations loaded from backend:', Object.keys(parsed));
+                return parsed;
+            } catch (e) {
+                console.warn('Failed to parse translations from backend:', e);
+                console.log('Content was:', content);
+            }
+        }
+        
+        console.log('Using fallback translations');
+        // Fallback translations if not provided by backend
+        return this.getFallbackTranslations();
+    }
+    getFallbackTranslations() {
+        return {
+            'en': {
+                pageTitle: 'Career Navigator - Learner Dashboard',
+                pageDescription: 'Your personalized learning dashboard for career development',
+                navBrand: 'CareerNav',
+                selectLanguage: 'Select language',
+                welcome: 'Welcome back',
+                welcomeSubtitle: 'Ready to continue your learning journey?',
+                profileCard: 'Profile Card',
+                learningProgress: 'Learning Progress',
+                quickActions: 'Quick Actions',
+                motivationalQuote: 'Motivational Quote',
+                currentLevel: 'Current Level',
+                skillsLearned: 'Skills Learned',
+                coursesCompleted: 'Courses Completed',
+                hoursSpent: 'Hours Spent',
+                achievements: 'Achievements',
+                profileBuilder: 'Profile Builder',
+                buildProfile: 'Build Your Profile',
+                careerExplorer: 'Career Explorer',
+                exploreCareers: 'Explore Careers',
+                recommendationViewer: 'Recommendation Viewer',
+                viewRecommendations: 'View Recommendations',
+                aiAssistant: 'AI Career Assistant',
+                typePlaceholder: 'Type your message here...',
+                aiWelcome: 'Hello! I\'m your AI Career Assistant. How can I help you today?',
+                quote1: 'Success is not final, failure is not fatal: it is the courage to continue that counts.',
+                quote2: 'The future belongs to those who believe in the beauty of their dreams.',
+                quote3: 'Education is the most powerful weapon which you can use to change the world.',
+                quote4: 'The only way to do great work is to love what you do.',
+                quote5: 'Innovation distinguishes between a leader and a follower.',
+            },
+            'hi': {
+                pageTitle: 'करियर नेविगेटर - लर्नर डैशबोर्ड',
+                pageDescription: 'करियर विकास के लिए आपका व्यक्तिगत शिक्षण डैशबोर्ड',
+                navBrand: 'करियरनव',
+                selectLanguage: 'भाषा चुनें',
+                welcome: 'वापस स्वागत है',
+                welcomeSubtitle: 'अपनी सीखने की यात्रा जारी रखने के लिए तैयार हैं?',
+                profileCard: 'प्रोफाइल कार्ड',
+                learningProgress: 'सीखने की प्रगति',
+                quickActions: 'त्वरित कार्य',
+                motivationalQuote: 'प्रेरणादायक उद्धरण',
+                currentLevel: 'वर्तमान स्तर',
+                skillsLearned: 'सीखे गए कौशल',
+                coursesCompleted: 'पूर्ण किए गए पाठ्यक्रम',
+                hoursSpent: 'बिताए गए घंटे',
+                achievements: 'उपलब्धियां',
+                profileBuilder: 'प्रोफाइल बिल्डर',
+                buildProfile: 'अपना प्रोफाइल बनाएं',
+                careerExplorer: 'करियर एक्सप्लोरर',
+                exploreCareers: 'करियर का अन्वेषण करें',
+                recommendationViewer: 'सिफारिश व्यूअर',
+                viewRecommendations: 'सिफारिशें देखें',
+                aiAssistant: 'एआई करियर सहायक',
+                typePlaceholder: 'अपना संदेश यहां लिखें...',
+                aiWelcome: 'नमस्ते! मैं आपका एआई करियर सहायक हूं। आज मैं आपकी कैसे मदद कर सकता हूं?',
+                quote1: 'सफलता अंतिम नहीं है, असफलता घातक नहीं है: जारी रखने का साहस ही मायने रखता है।',
+                quote2: 'भविष्य उनका है जो अपने सपनों की सुंदरता में विश्वास करते हैं।',
+                quote3: 'शिक्षा सबसे शक्तिशाली हथियार है जिसका उपयोग आप दुनिया को बदलने के लिए कर सकते हैं।',
+                quote4: 'महान काम करने का एकमात्र तरीका यह है कि आप जो करते हैं उससे प्यार करें।',
+                quote5: 'नवाचार एक नेता और अनुयायी के बीच अंतर करता है।',
+            }
+        };
     }
 
-    // Language Management
     setupLanguageSelector() {
         const languageBtn = document.getElementById('languageBtn');
         const languageDropdown = document.getElementById('languageDropdown');
         const langOptions = document.querySelectorAll('.lang-option');
 
-        // Toggle dropdown
+        if (!languageBtn || !languageDropdown) return;
+
         languageBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             this.toggleDropdown(languageDropdown, languageBtn);
         });
 
-        // Handle language selection
         langOptions.forEach(option => {
-            option.addEventListener('click', (e) => {
+            option.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const selectedLang = option.dataset.lang;
-                const textData = JSON.parse(option.dataset.text);
                 
-                this.changeLanguage(selectedLang, textData);
-                this.closeDropdown(languageDropdown, languageBtn);
+                // Check if data-text exists (old format) - ignore it, we use backend translations
+                if (selectedLang) {
+                    await this.changeLanguage(selectedLang);
+                    this.closeDropdown(languageDropdown, languageBtn);
+                }
             });
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
                 this.closeDropdown(languageDropdown, languageBtn);
             }
         });
 
-        // Keyboard navigation
         languageBtn.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -61,7 +155,6 @@ class LearnerDashboard {
 
     toggleDropdown(dropdown, button) {
         const isOpen = dropdown.classList.contains('show');
-        
         if (isOpen) {
             this.closeDropdown(dropdown, button);
         } else {
@@ -72,7 +165,6 @@ class LearnerDashboard {
     openDropdown(dropdown, button) {
         dropdown.classList.add('show');
         button.setAttribute('aria-expanded', 'true');
-        button.focus();
     }
 
     closeDropdown(dropdown, button) {
@@ -80,12 +172,61 @@ class LearnerDashboard {
         button.setAttribute('aria-expanded', 'false');
     }
 
-    changeLanguage(lang, textData) {
-        this.currentLanguage = lang;
-        this.currentLanguageData = textData;
+    async changeLanguage(lang) {
+        try {
+            // Send language change to backend
+            const response = await fetch('/de/change-language/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: JSON.stringify({ language: lang })
+            });
+
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                this.currentLanguage = lang;
+                this.currentLanguageData = this.allTranslations[lang] || this.allTranslations['en'];
+                
+                this.applyLanguage(lang);
+                this.announceToScreenReader(`Language changed to ${this.getLangName(lang)}`);
+                this.showNotification(`Language changed to ${this.getLangName(lang)}`, 'success');
+            } else {
+                this.showNotification('Failed to change language', 'error');
+            }
+        } catch (error) {
+            console.error('Language change error:', error);
+            // Still apply frontend changes even if backend fails
+            this.currentLanguage = lang;
+            this.currentLanguageData = this.allTranslations[lang] || this.allTranslations['en'];
+            this.applyLanguage(lang);
+        }
+    }
+
+    applyLanguage(lang) {
+        const textData = this.allTranslations[lang] || this.allTranslations['en'];
         
         // Update current language display
         const currentLangElement = document.querySelector('.current-lang');
+        if (currentLangElement) {
+            currentLangElement.textContent = this.getLangName(lang);
+            currentLangElement.setAttribute('data-lang', lang);
+        }
+
+        // Update text content with fade transition
+        this.updateTextContent(textData);
+        
+        // Update HTML lang attribute
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute('data-current-lang', lang);
+        
+        // Update chatbot language if exists
+        this.updateChatbotLanguage(lang);
+    }
+
+    getLangName(lang) {
         const langNames = {
             'en': 'English',
             'hi': 'हिन्दी',
@@ -93,42 +234,61 @@ class LearnerDashboard {
             'bn': 'বাংলা',
             'gu': 'ગુજરાતી'
         };
-        currentLangElement.textContent = langNames[lang];
-        currentLangElement.setAttribute('data-lang', lang);
-
-        // Update text content with smooth fade transition
-        this.updateTextContent(textData);
-        
-        // Update HTML lang attribute
-        document.documentElement.lang = this.currentLanguage;
+        return langNames[lang] || 'English';
     }
 
     updateTextContent(textData) {
         const elements = {
-            pageTitle: document.title,
-            navBrand: document.getElementById('navBrand'),
-            languageBtn: document.getElementById('languageBtn'),
-            welcomeTitle: document.getElementById('welcomeTitle'),
-            profileCardTitle: document.getElementById('profileCardTitle'),
-            learningProgressTitle: document.getElementById('learningProgressTitle'),
-            quickActionsTitle: document.getElementById('quickActionsTitle'),
-            motivationalQuoteTitle: document.getElementById('motivationalQuoteTitle'),
-            currentLevel: document.getElementById('currentLevel'),
-            skillsLearned: document.getElementById('skillsLearned'),
-            coursesCompleted: document.getElementById('coursesCompleted'),
-            hoursSpent: document.getElementById('hoursSpent'),
-            achievements: document.getElementById('achievements'),
-            profileBuilderTitle: document.getElementById('profileBuilderTitle'),
-            buildProfileDesc: document.getElementById('buildProfileDesc'),
-            careerExplorerTitle: document.getElementById('careerExplorerTitle'),
-            exploreCareersDesc: document.getElementById('exploreCareersDesc'),
-            recommendationViewerTitle: document.getElementById('recommendationViewerTitle'),
-            viewRecommendationsDesc: document.getElementById('viewRecommendationsDesc')
+            // Page metadata
+            pageTitle: { type: 'title', selector: null },
+            
+            // Navigation
+            navBrand: { id: 'navBrand' },
+            languageBtn: { id: 'languageBtn', attr: 'aria-label', key: 'selectLanguage' },
+            
+            // Welcome section
+            welcomeTitle: { id: 'welcomeTitle' },
+            welcomeSubtitle: { id: 'welcomeSubtitle' },
+            
+            // Section titles
+            profileCardTitle: { id: 'profileCardTitle' },
+            learningProgressTitle: { id: 'learningProgressTitle' },
+            quickActionsTitle: { id: 'quickActionsTitle' },
+            motivationalQuoteTitle: { id: 'motivationalQuoteTitle' },
+            
+            // Progress labels
+            currentLevel: { id: 'currentLevel' },
+            skillsLearned: { id: 'skillsLearned' },
+            coursesCompleted: { id: 'coursesCompleted' },
+            hoursSpent: { id: 'hoursSpent' },
+            achievements: { id: 'achievements' },
+            
+            // Action cards
+            profileBuilderTitle: { id: 'profileBuilderTitle' },
+            buildProfileDesc: { id: 'buildProfileDesc' },
+            careerExplorerTitle: { id: 'careerExplorerTitle' },
+            exploreCareersDesc: { id: 'exploreCareersDesc' },
+            recommendationViewerTitle: { id: 'recommendationViewerTitle' },
+            viewRecommendationsDesc: { id: 'viewRecommendationsDesc' },
+            
+            // Chatbot
+            assistantTitle: { id: 'assistantTitle' },
+            chatbotInput: { id: 'chatbotInput', attr: 'placeholder', key: 'typePlaceholder' },
+            welcomeText: { id: 'welcomeText' }
         };
 
         // Add fade out effect
-        Object.values(elements).forEach(element => {
-            if (element) {
+        Object.keys(elements).forEach(key => {
+            const config = elements[key];
+            let element;
+            
+            if (config.type === 'title') {
+                element = document.querySelector('title');
+            } else if (config.id) {
+                element = document.getElementById(config.id);
+            }
+            
+            if (element && !config.attr) {
                 element.style.transition = 'opacity 0.3s ease';
                 element.style.opacity = '0';
             }
@@ -136,78 +296,99 @@ class LearnerDashboard {
 
         // Update content after fade out
         setTimeout(() => {
-            // Update page title and meta description
-            document.title = textData.pageTitle;
+            // Update page title
+            document.title = textData.pageTitle || textData.pageTitle;
+            
+            // Update meta description
             const metaDescription = document.querySelector('meta[name="description"]');
-            if (metaDescription) {
+            if (metaDescription && textData.pageDescription) {
                 metaDescription.setAttribute('content', textData.pageDescription);
             }
 
-            // Update navigation brand
-            if (elements.navBrand) {
-                elements.navBrand.textContent = textData.navBrand;
-            }
-            
-            // Update language button aria-label
-            if (elements.languageBtn) {
-                elements.languageBtn.setAttribute('aria-label', textData.selectLanguage);
-            }
-            
-            // Update section titles
-            if (elements.welcomeTitle) elements.welcomeTitle.textContent = textData.welcome;
-            if (elements.profileCardTitle) elements.profileCardTitle.textContent = textData.profileCard;
-            if (elements.learningProgressTitle) elements.learningProgressTitle.textContent = textData.learningProgress;
-            if (elements.quickActionsTitle) elements.quickActionsTitle.textContent = textData.quickActions;
-            if (elements.motivationalQuoteTitle) elements.motivationalQuoteTitle.textContent = textData.motivationalQuote;
-            
-            // Update labels
-            if (elements.currentLevel) elements.currentLevel.textContent = textData.currentLevel;
-            if (elements.skillsLearned) elements.skillsLearned.textContent = textData.skillsLearned;
-            if (elements.coursesCompleted) elements.coursesCompleted.textContent = textData.coursesCompleted;
-            if (elements.hoursSpent) elements.hoursSpent.textContent = textData.hoursSpent;
-            if (elements.achievements) elements.achievements.textContent = textData.achievements;
-            
-            // Update action cards
-            if (elements.profileBuilderTitle) elements.profileBuilderTitle.textContent = textData.profileBuilder;
-            if (elements.buildProfileDesc) elements.buildProfileDesc.textContent = textData.buildProfile;
-            if (elements.careerExplorerTitle) elements.careerExplorerTitle.textContent = textData.careerExplorer;
-            if (elements.exploreCareersDesc) elements.exploreCareersDesc.textContent = textData.exploreCareers;
-            if (elements.recommendationViewerTitle) elements.recommendationViewerTitle.textContent = textData.recommendationViewer;
-            if (elements.viewRecommendationsDesc) elements.viewRecommendationsDesc.textContent = textData.viewRecommendations;
+            // Update all text elements
+            Object.keys(elements).forEach(key => {
+                const config = elements[key];
+                let element;
+                
+                if (config.id) {
+                    element = document.getElementById(config.id);
+                }
+                
+                if (element) {
+                    if (config.attr) {
+                        // Update attribute (like aria-label or placeholder)
+                        const textKey = config.key || key;
+                        if (textData[textKey]) {
+                            element.setAttribute(config.attr, textData[textKey]);
+                        }
+                    } else {
+                        // Update text content
+                        if (textData[key]) {
+                            element.textContent = textData[key];
+                        }
+                    }
+                }
+            });
 
             // Update quotes
             this.updateQuotes(textData);
 
             // Fade in effect
-            Object.values(elements).forEach(element => {
-                if (element) {
+            Object.keys(elements).forEach(key => {
+                const config = elements[key];
+                let element;
+                
+                if (config.id) {
+                    element = document.getElementById(config.id);
+                }
+                
+                if (element && !config.attr) {
                     element.style.opacity = '1';
                 }
             });
         }, 300);
     }
 
-    // Progress Rings Animation
+    updateChatbotLanguage(lang) {
+        // Update chatbot language indicator if it exists
+        const chatbotLangBtn = document.getElementById('chatbotLangBtn');
+        if (chatbotLangBtn) {
+            const currentLang = chatbotLangBtn.querySelector('.current-lang');
+            if (currentLang) {
+                currentLang.textContent = lang.toUpperCase();
+                currentLang.setAttribute('data-lang', lang);
+            }
+        }
+    }
+
+    getCSRFToken() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+        return cookieValue || '';
+    }
+
     setupProgressRings() {
         const progressBars = document.querySelectorAll('.progress-bar');
         const progressNumbers = document.querySelectorAll('.progress-number');
         
-        // Animate progress rings on load
-        setTimeout(() => {
-            this.animateProgressRing(progressBars[0], 75, progressNumbers[0]);
-            this.animateProgressRing(progressBars[1], 80, progressNumbers[1]);
-            this.animateProgressRing(progressBars[2], 65, progressNumbers[2]);
-        }, 1000);
+        if (progressBars.length >= 3) {
+            setTimeout(() => {
+                this.animateProgressRing(progressBars[0], 75, progressNumbers[0]);
+                this.animateProgressRing(progressBars[1], 80, progressNumbers[1]);
+                this.animateProgressRing(progressBars[2], 65, progressNumbers[2]);
+            }, 1000);
+        }
     }
 
     animateProgressRing(progressBar, percentage, progressNumber) {
-        const circumference = 2 * Math.PI * 45; // radius = 45
+        const circumference = 2 * Math.PI * 45;
         const offset = circumference - (percentage / 100) * circumference;
         
         progressBar.style.strokeDashoffset = offset;
         progressBar.classList.add('animate');
         
-        // Animate number counting
         this.animateNumber(progressNumber, percentage, 2000);
     }
 
@@ -230,18 +411,15 @@ class LearnerDashboard {
         requestAnimationFrame(animate);
     }
 
-    // Action Cards
     setupActionCards() {
         const actionCards = document.querySelectorAll('.action-card');
         
         actionCards.forEach(card => {
-            // Ripple effect
             card.addEventListener('click', (e) => {
                 this.createRippleEffect(e, card);
                 this.handleCardClick(card);
             });
 
-            // Glow effect on hover
             card.addEventListener('mouseenter', () => {
                 this.addGlowEffect(card);
             });
@@ -250,7 +428,6 @@ class LearnerDashboard {
                 this.removeGlowEffect(card);
             });
 
-            // Keyboard support
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -261,32 +438,31 @@ class LearnerDashboard {
     }
 
     handleCardClick(card) {
-    const cardId = card.id;
+        const cardId = card.id;
 
-    switch(cardId) {
-        case 'profileBuilderCard':
-            this.showNotification('Opening Profile Builder...', 'info');
-            setTimeout(() => {
-                window.location.href = '/de/learner-dashboard/profile-builder/'; 
-            }, 1000);
-            break;
+        switch(cardId) {
+            case 'profileBuilderCard':
+                this.showNotification('Opening Profile Builder...', 'info');
+                setTimeout(() => {
+                    window.location.href = '/de/learner-dashboard/profile-builder/';
+                }, 1000);
+                break;
 
-        case 'careerExplorerCard':
-            this.showNotification('Opening Career Explorer...', 'info');
-            setTimeout(() => {
-                window.location.href = '/de/career-explorer/'; 
-            }, 1000);
-            break;
+            case 'careerExplorerCard':
+                this.showNotification('Opening Career Explorer...', 'info');
+                setTimeout(() => {
+                    window.location.href = '/de/career-explorer/';
+                }, 1000);
+                break;
 
-        case 'recommendationViewerCard':  // fixed typo
-            this.showNotification('Opening Recommendation Viewer...', 'info');
-            setTimeout(() => {
-                window.location.href = '/de/recommendation-viewer/'; 
-            }, 1000);
-            break;
+            case 'recommendationViewerCard':
+                this.showNotification('Opening Recommendation Viewer...', 'info');
+                setTimeout(() => {
+                    window.location.href = '/de/recommendation-viewer/';
+                }, 1000);
+                break;
+        }
     }
-}
-
 
     createRippleEffect(e, card) {
         const ripple = document.createElement('span');
@@ -317,24 +493,25 @@ class LearnerDashboard {
         card.style.boxShadow = '';
     }
 
-    // Motivational Quotes
     setupMotivationalQuotes() {
-        this.quotes = [
-            { text: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
-            { text: 'The future belongs to those who believe in the beauty of their dreams.', author: 'Eleanor Roosevelt' },
-            { text: 'Education is the most powerful weapon which you can use to change the world.', author: 'Nelson Mandela' },
-            { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
-            { text: 'Innovation distinguishes between a leader and a follower.', author: 'Steve Jobs' }
-        ];
-
-        // Start quote rotation
+        this.updateQuotesFromLanguage(this.currentLanguageData);
         this.startQuoteRotation();
+    }
+
+    updateQuotesFromLanguage(textData) {
+        this.quotes = [
+            { text: textData.quote1 || 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
+            { text: textData.quote2 || 'The future belongs to those who believe in the beauty of their dreams.', author: 'Eleanor Roosevelt' },
+            { text: textData.quote3 || 'Education is the most powerful weapon which you can use to change the world.', author: 'Nelson Mandela' },
+            { text: textData.quote4 || 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+            { text: textData.quote5 || 'Innovation distinguishes between a leader and a follower.', author: 'Steve Jobs' }
+        ];
     }
 
     startQuoteRotation() {
         setInterval(() => {
             this.nextQuote();
-        }, 5000); // Change quote every 5 seconds
+        }, 8000);
     }
 
     nextQuote() {
@@ -346,14 +523,12 @@ class LearnerDashboard {
         const quoteText = document.getElementById('quoteText');
         const quoteAuthor = document.getElementById('quoteAuthor');
         
-        if (quoteText && quoteAuthor) {
-            // Fade out
+        if (quoteText && quoteAuthor && this.quotes.length > 0) {
             quoteText.style.transition = 'opacity 0.5s ease';
             quoteAuthor.style.transition = 'opacity 0.5s ease';
             quoteText.style.opacity = '0';
             quoteAuthor.style.opacity = '0';
             
-            // Update content and fade in
             setTimeout(() => {
                 quoteText.textContent = this.quotes[this.currentQuoteIndex].text;
                 quoteAuthor.textContent = `- ${this.quotes[this.currentQuoteIndex].author}`;
@@ -364,20 +539,10 @@ class LearnerDashboard {
     }
 
     updateQuotes(textData) {
-        // Update quotes with translated versions if available
-        if (textData.quote1) {
-            this.quotes = [
-                { text: textData.quote1, author: 'Winston Churchill' },
-                { text: textData.quote2, author: 'Eleanor Roosevelt' },
-                { text: textData.quote3, author: 'Nelson Mandela' },
-                { text: textData.quote4, author: 'Steve Jobs' },
-                { text: textData.quote5, author: 'Steve Jobs' }
-            ];
-            this.updateQuoteDisplay();
-        }
+        this.updateQuotesFromLanguage(textData);
+        this.updateQuoteDisplay();
     }
 
-    // Profile Card 3D Tilt
     setupProfileCard() {
         const profileCard = document.getElementById('profileCard');
         
@@ -410,18 +575,10 @@ class LearnerDashboard {
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
     }
 
-    // Accessibility Features
     setupAccessibility() {
-        // Skip to main content link
         this.createSkipLink();
-        
-        // Focus management
         this.setupFocusManagement();
-        
-        // Screen reader announcements
         this.setupScreenReaderSupport();
-        
-        // Keyboard navigation
         this.setupKeyboardNavigation();
     }
 
@@ -434,8 +591,8 @@ class LearnerDashboard {
             position: absolute;
             top: -40px;
             left: 6px;
-            background: var(--neon-blue);
-            color: var(--background-black);
+            background: var(--neon-blue, #00d4ff);
+            color: var(--background-black, #000);
             padding: 8px;
             text-decoration: none;
             border-radius: 4px;
@@ -455,10 +612,9 @@ class LearnerDashboard {
     }
 
     setupFocusManagement() {
-        // Trap focus in dropdown when open
         document.addEventListener('keydown', (e) => {
             const dropdown = document.getElementById('languageDropdown');
-            if (dropdown.classList.contains('show')) {
+            if (dropdown && dropdown.classList.contains('show')) {
                 this.trapFocusInDropdown(e, dropdown);
             }
         });
@@ -489,7 +645,6 @@ class LearnerDashboard {
     }
 
     setupScreenReaderSupport() {
-        // Announce language changes
         const announcer = document.createElement('div');
         announcer.setAttribute('aria-live', 'polite');
         announcer.setAttribute('aria-atomic', 'true');
@@ -506,7 +661,6 @@ class LearnerDashboard {
             border: 0;
         `;
         document.body.appendChild(announcer);
-
         this.announcer = announcer;
     }
 
@@ -517,10 +671,9 @@ class LearnerDashboard {
     }
 
     setupKeyboardNavigation() {
-        // Arrow key navigation for language dropdown
         document.addEventListener('keydown', (e) => {
             const dropdown = document.getElementById('languageDropdown');
-            if (dropdown.classList.contains('show')) {
+            if (dropdown && dropdown.classList.contains('show')) {
                 const options = dropdown.querySelectorAll('.lang-option');
                 const currentIndex = Array.from(options).indexOf(document.activeElement);
 
@@ -537,25 +690,11 @@ class LearnerDashboard {
         });
     }
 
-    // Utility Functions
-    loadLanguageData() {
-        // Initialize with English language data
-        const englishOption = document.querySelector('.lang-option[data-lang="en"]');
-        if (englishOption) {
-            this.currentLanguageData = JSON.parse(englishOption.dataset.text);
-            // Initialize the page with English text
-            this.updateTextContent(this.currentLanguageData);
-        }
-        console.log('Language data loaded');
-    }
-
     startAnimations() {
-        // Start progress ring animations
         setTimeout(() => {
             this.setupProgressRings();
         }, 1000);
         
-        // Start quote rotation
         setTimeout(() => {
             this.startQuoteRotation();
         }, 2000);
@@ -565,17 +704,25 @@ class LearnerDashboard {
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.textContent = message;
+        
+        const colors = {
+            'success': '#00ff88',
+            'info': '#00d4ff',
+            'error': '#ff4444'
+        };
+        
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? 'var(--neon-green)' : 'var(--neon-blue)'};
-            color: var(--background-black);
+            background: ${colors[type] || colors.info};
+            color: #000;
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: var(--shadow-glow);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.5);
             z-index: 1000;
             animation: slideInRight 0.3s ease;
+            font-weight: 500;
         `;
 
         document.body.appendChild(notification);
@@ -587,7 +734,7 @@ class LearnerDashboard {
     }
 }
 
-// CSS for animations (injected dynamically)
+// CSS animations
 const animationCSS = `
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
@@ -616,28 +763,25 @@ const animationCSS = `
 }
 `;
 
-// Inject animation CSS
 const styleSheet = document.createElement('style');
 styleSheet.textContent = animationCSS;
 document.head.appendChild(styleSheet);
 
-// Initialize the application when DOM is loaded
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new LearnerDashboard();
 });
 
-// Handle page visibility changes
+// Handle visibility changes
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        // Pause animations when page is hidden
         document.body.style.animationPlayState = 'paused';
     } else {
-        // Resume animations when page is visible
         document.body.style.animationPlayState = 'running';
     }
 });
 
-// Performance optimization: Reduce motion for users who prefer it
+// Reduced motion support
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.style.setProperty('--transition-fast', '0.01ms');
     document.documentElement.style.setProperty('--transition-normal', '0.01ms');

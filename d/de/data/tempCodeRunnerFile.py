@@ -3,7 +3,7 @@ import os
 import torch
 from transformers import pipeline
 
-TARGET_LANGUAGE_CODE = 'ta'
+TARGET_LANGUAGE_CODE = 'bn'
 
 DEVICE = 0 if torch.cuda.is_available() else -1
 print(f"Using device: {'GPU' if DEVICE == 0 else 'CPU'}")
